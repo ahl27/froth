@@ -2,10 +2,9 @@
  * Rdefines.h is needed for the SEXP typedef, for the error(), INTEGER(),
  * GET_DIM(), LOGICAL(), NEW_INTEGER(), PROTECT() and UNPROTECT() macros,
  * and for the NA_INTEGER constant symbol.
- */
+
 #include <Rdefines.h>
 
-/*
  * R_ext/Rdynload.h is needed for the R_CallMethodDef typedef and the
  * R_registerRoutines() prototype.
  */

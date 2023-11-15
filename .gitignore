@@ -4,3 +4,7 @@
 *.Rproj
 */*.Rproj
 .Rbuildignore
+*.o
+*/*.o
+*.so
+*.*.so

@@ -53,13 +53,13 @@ static Stack* allocStack(SEXP val){
 }
 
 static inline Stack* safeStackAccess(SEXP sPtr){
-  if (!R_ExternalPtrAddr(tnPtr))
+  if (!R_ExternalPtrAddr(sPtr))
       error("External pointer no longer exists!");
   return (Stack *) R_ExternalPtrAddr(sPtr);
 }
 
 static void FreeStack(SEXP sPtr){
-  if (!R_ExternalPtrAddr(tnPtr)) return;
+  if (!R_ExternalPtrAddr(sPtr)) return;
   Stack *head = (Stack *) R_ExternalPtrAddr(sPtr);
   CleanupStack(head);
   R_ClearExternalPtr(sPtr);
