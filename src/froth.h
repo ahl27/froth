@@ -20,7 +20,7 @@ enum ACCESS {
 
 // frothstack.c
 SEXP initFrothStack(SEXP objList);
-SEXP push(SEXP val, SEXP sPtr);
+SEXP push(SEXP sPtr, SEXP val);
 SEXP pop(SEXP sPtr);
 SEXP popn(SEXP sPtr, SEXP NUM);
 

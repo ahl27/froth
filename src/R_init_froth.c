@@ -12,11 +12,6 @@
 #include <R_ext/Rdynload.h>
 
 /*
- * Other standard library includes
- */
-#include <math.h>
-
-/*
  * main header include
  */
 #include "froth.h"
@@ -28,8 +23,12 @@
 /*
  * -- REGISTRATION OF THE .Call ENTRY POINTS ---
  */
-static const R_CallMethodDef callMethods[] = { // method call, pointer, num args
-    {NULL, NULL, 0}
+static const R_CallMethodDef callMethods[] = { // method name, num args
+  CALLDEF(initFrothStack, 1),
+  CALLDEF(push, 2),
+  CALLDEF(pop, 1),
+  CALLDEF(popn, 2),
+  {NULL, NULL, 0}
 };
 
 /*

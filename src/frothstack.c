@@ -10,7 +10,7 @@ SEXP initFrothStack(SEXP objList){
   return retval;
 }
 
-SEXP push(SEXP val, SEXP sPtr){
+SEXP push(SEXP sPtr, SEXP val){
   Stack *head = safeStackAccess(sPtr);
   Stack *newnode = allocStack(val);
   newnode->next = head;
