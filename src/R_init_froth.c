@@ -23,10 +23,10 @@
  * -- REGISTRATION OF THE .Call ENTRY POINTS ---
  */
 static const R_CallMethodDef callMethods[] = { // method name, num args
-  CALLDEF(initFrothStack, 1),
+  CALLDEF(initFrothStack, 0),
   CALLDEF(push, 2),
   CALLDEF(pop, 1),
-  CALLDEF(popn, 2),
+  CALLDEF(peek, 1),
   {NULL, NULL, 0}
 };
 
