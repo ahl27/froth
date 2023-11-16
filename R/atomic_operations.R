@@ -3,13 +3,13 @@ push <- function(obj){
   assign("Stack",
          .Call("push", froth.env$Stack, obj, PACKAGE='froth'),
          env=froth.env)
-  invisible(0)
+  .ok()
 }
 push_operation <- function(obj){
   assign("PStack",
          .Call("push", froth.env$PStack, obj, PACKAGE='froth'),
          env=froth.env)
-  invisible(0)
+  .ok()
 }
 
 peek <- function(stack=froth.env$Stack){
@@ -32,7 +32,17 @@ popn <- function(n){
   l
 }
 
-pop_operation <- function(){
+dign <- function(n){
+  if(is.null(n) || !is.numeric(n))
+    .warning("invalid input to dig!")
+  n <- as.integer(n)
+  assign("Stack",
+         .Call("dign", froth.env$Stack, n, PACKAGE='froth'),
+         env=froth.env)
+  .ok()
+}
+
+pop_op <- function(){
   v <- peek(froth.env$PStack)
   if(!is.null(v)){
     assign("PStack",

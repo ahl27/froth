@@ -14,6 +14,7 @@ SEXP initFrothStack(void);
 SEXP push(SEXP stack, SEXP val);
 SEXP pop(SEXP stack);
 SEXP peek(SEXP stack);
+SEXP dign(SEXP stack, SEXP n);
 
 /*** Internal Functions ***/
 

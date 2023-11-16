@@ -27,6 +27,7 @@ static const R_CallMethodDef callMethods[] = { // method name, num args
   CALLDEF(push, 2),
   CALLDEF(pop, 1),
   CALLDEF(peek, 1),
+  CALLDEF(dign, 2),
   {NULL, NULL, 0}
 };
 

@@ -14,6 +14,22 @@ inline SEXP peek(SEXP stack){
   return(CAR(stack));
 }
 
+SEXP dign(SEXP stack, SEXP n){
+  int depth = INTEGER(n)[0];
+  SEXP cur = stack;
+  for(int i=0; i<depth-1; i++){
+    if(CAR(cur) == R_NilValue)
+      return(R_NilValue);
+    cur = CDR(stack);
+  }
+
+  SEXP tmp = PROTECT(CADR(cur));
+  SETCDR(cur, CDDR(cur));
+  stack = PROTECT(CONS(tmp, stack));
+  UNPROTECT(2);
+  return(stack);
+}
+
 SEXP pop(SEXP stack){
   SEXP top = PROTECT(CAR(stack));
   if(top == R_NilValue){
