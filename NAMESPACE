@@ -1,5 +1,4 @@
 useDynLib(froth)
 
-export(push)
-export(pop)
-export(popn)
+export(.initDictionary)
+export(froth)

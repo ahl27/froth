@@ -23,5 +23,6 @@ SEXP pop(SEXP stack){
     UNPROTECT(1);
     return(stack);
   }
+  UNPROTECT(1);
   return(CDR(stack));
 }
