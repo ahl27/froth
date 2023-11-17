@@ -3,15 +3,17 @@
 froth is a FORTH implementation for R (or at least, it will be).
 
 I've just started development, but this README will be updated as I get further in this project.
+So far I'm maybe 1/3rd of the way to a working first version. This will (likely) not be a 1:1 copy
+of Gforth, I think I'd rather have a forth implementation that is robust and works in R than one
+that exacly imitates existing Gforth. But...tbd.
 
-## Current Status
-- stack correctly initializes
-- `push` and `pop` methods work correctly
+## Implemented Words
+- Arithmetic
+- Unary operations
+- Logical Comparators
+- if / then statements
 
 ## TODOs
-Planning to update bespoke stack implementation to instead use a Pairlist.
-Pairlists will simplify code greatly and can theoretically be implemented
-using only a single PROTECT stack call. This should also solve issues with
-background garbage collection causing problems when frequently malloc'ing
-and freeing memory. Pairlists are intended for usage in function calls, 
-but the structure will work nicely here.
+- loops
+- user-defined macros
+- other stuff?

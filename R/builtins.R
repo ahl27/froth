@@ -43,6 +43,6 @@
   .fdefine('!=', \() {.doword('apply2', `!=`)})
 
   ## Control flow
-  .fdefine('if', \() {if(!pop()) while(peek(froth.env$PStack) != 'then') pop_op(); .ok()})
+  .fdefine('if', .if)
   .falias('then', 'noop')
 }
