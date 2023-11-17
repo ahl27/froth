@@ -14,29 +14,3 @@
     return(2L)
   f(...)
 }
-
-.initDictionary <- function(){
-  ## Initializing the dictionary of builtins
-
-  ## Core functions
-  .fdefine('exit', .exit)
-  .fdefine('.', \() {print(pop()); .ok()})
-  .fdefine('apply1', \(f) {. <- f(pop()); push(.)})
-  .fdefine('apply2', \(f) {. <- f(pop(), pop()); push(.)})
-  .fdefine('swap', \() dign(1L))
-  .fdefine('dig', \() {. <- pop(); dign(.)})
-  .fdefine('inspect', \() {print(froth.env$Stack); .ok()})
-  .fdefine('lit', \() {. <- pop_op(); push(.)})
-  .fdefine('(', \() {. <- ''; while(. != ')' && !is.null(.)) . <- pop_op(); .ok()})
-
-  ## Functions built from core internals
-  .fdefine('+', \() {.doword('apply2', `+`)})
-  .fdefine('-', \() {.doword('apply2', `-`)})
-  .fdefine('*', \() {.doword('apply2', `*`)})
-  .fdefine('/', \() {.doword('apply2', `/`)})
-  .fdefine('^', \() {.doword('apply2', `^`)})
-  .fdefine('%', \() {.doword('apply2', `%%`)})
-  .falias("mod", '%')
-  .falias("pow", '^')
-  .falias("times", "*")
-}
