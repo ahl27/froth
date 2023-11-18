@@ -3,9 +3,13 @@
 
   ## Core functions
   .fdefine('exit', .exit)
+  .falias('quit', 'exit')
   .fdefine('.', \() {print(pop()); .ok()})
-  .fdefine('apply1', \(f) {. <- f(pop()); push(.)})
-  .fdefine('apply2', \(f) {. <- f(pop(), pop()); push(.)})
+  .fdefine('apply', \(f, nargs){
+    . <- rev(lapply(seq_len(nargs), \(i) pop()))
+    push(do.call(f, .))
+    .ok()
+  })
   .fdefine('swap', \() dign(1L))
   .fdefine('dig', \() {. <- pop(); dign(.)})
   .fdefine('inspect', \() {print(froth.env$Stack); .ok()})
@@ -14,33 +18,34 @@
   .fdefine('noop', .ok)
 
   ## Arithmetic
-  .fdefine('+', \() {.doword('apply2', `+`)})
-  .fdefine('-', \() {.doword('apply2', `-`)})
-  .fdefine('*', \() {.doword('apply2', `*`)})
-  .fdefine('/', \() {.doword('apply2', `/`)})
-  .fdefine('^', \() {.doword('apply2', `^`)})
-  .fdefine('%', \() {.doword('apply2', `%%`)})
+  .fdefine('+', \() {.doword('apply', `+`, 2L)})
+  .fdefine('sum', \() {.doword('apply', `+`, 2L)})
+  .fdefine('-', \() {.doword('apply', `-`, 2L)})
+  .fdefine('*', \() {.doword('apply', `*`, 2L)})
+  .fdefine('/', \() {.doword('apply', `/`, 2L)})
+  .fdefine('^', \() {.doword('apply', `^`, 2L)})
+  .fdefine('%', \() {.doword('apply', `%%`, 2L)})
   .falias("mod", '%')
   .falias("pow", '^')
   .falias("times", "*")
 
   ## Unary operators
-  .fdefine('not', \() {.doword('apply1', `!`)})
-  .fdefine('or', \() {.doword('apply2', `|`)})
-  .fdefine('and', \() {.doword('apply2', `&`)})
-  .fdefine('xor', \() {.doword('apply2', `xor`)})
+  .fdefine('not', \() {.doword('apply', `!`, 1L)})
+  .fdefine('or', \() {.doword('apply', `|`, 2L)})
+  .fdefine('and', \() {.doword('apply', `&`, 2L)})
+  .fdefine('xor', \() {.doword('apply', `xor`, 2L)})
   .falias('!', 'not')
   .falias('!', '~')
   .falias('&', 'and')
   .falias('|', 'or')
 
   ## Comparisons
-  .fdefine('<', \() {.doword('apply2', `<`)})
-  .fdefine('<=', \() {.doword('apply2', `<=`)})
-  .fdefine('>', \() {.doword('apply2', `>`)})
-  .fdefine('>=', \() {.doword('apply2', `>=`)})
-  .fdefine('==', \() {.doword('apply2', `==`)})
-  .fdefine('!=', \() {.doword('apply2', `!=`)})
+  .fdefine('<', \() {.doword('apply', `<`, 2L)})
+  .fdefine('<=', \() {.doword('apply', `<=`, 2L)})
+  .fdefine('>', \() {.doword('apply', `>`, 2L)})
+  .fdefine('>=', \() {.doword('apply', `>=`, 2L)})
+  .fdefine('==', \() {.doword('apply', `==`, 2L)})
+  .fdefine('!=', \() {.doword('apply', `!=`, 2L)})
 
   ## Control flow
   .fdefine('if', .if)
