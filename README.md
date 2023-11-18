@@ -1,6 +1,6 @@
 # froth: FORTH for R
 
-<img src="froth.png" width="4.39cm"/>
+<img src="./froth.png" width="400"/>
 
 froth is a FORTH implementation for R (or at least, it will be).
 
