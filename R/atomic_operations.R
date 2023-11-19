@@ -51,10 +51,3 @@ pop_op <- function(){
   }
   v
 }
-
-.if <- function(shortcirc=FALSE){
-  if(shortcirc || !pop())
-    while((. <- peek(froth.env$PStack)) != 'then' && !is.null(.))
-      if(pop_op()=='if') .if(TRUE)
-  .ok()
-}

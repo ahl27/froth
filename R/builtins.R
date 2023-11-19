@@ -49,5 +49,6 @@
 
   ## Control flow
   .fdefine('if', .if)
+  .fdefine('else', .else)
   .falias('then', 'noop')
 }
