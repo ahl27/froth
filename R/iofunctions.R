@@ -1,0 +1,20 @@
+.initIOFunctions <- function(){
+  .fdefine('.', \() {print(pop()); .ok()})
+  .fdefine('emit', \() {cat(intToUtf8(pop())); .ok()})
+  .fdefine('."', .catString)
+  .fdefine('spaces', \() {cat(rep(' ', pop())); .ok()})
+  .fdefine('space', \() {cat(' '); .ok()})
+  .fdefine('cr', \() {cat('\n'); .ok()})
+}
+
+.initIOAliases <- function(){
+
+}
+
+
+.catString <- function(){
+  while((. <- pop_op()) != '"' && !is.null(.)){
+    cat(., ' ')
+  }
+  .ok()
+}

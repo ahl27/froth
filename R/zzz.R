@@ -19,6 +19,7 @@ froth.env <- new.env(hash=TRUE, parent=emptyenv())
   packageStartupMessage("Done!")
   packageStartupMessage("Initializing dictionary...")
   .initDictionary()
+  .initAliases()
   packageStartupMessage("Done!")
 }
 

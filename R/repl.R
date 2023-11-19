@@ -5,6 +5,7 @@
   for(token in ss){
     push_operation(token)
   }
+  .ok()
 }
 
 .evalPStack <- function(){

@@ -1,3 +1,11 @@
+.initControlFunctions <- function(){
+  .fdefine('if', .if)
+  .fdefine('else', .else)
+}
+
+.initControlAliases <- function(){
+  .falias('then', 'noop')
+}
 
 .if <- function(shortcirc=FALSE){
   if(shortcirc || !pop())
@@ -12,3 +20,4 @@
       next
   .ok()
 }
+

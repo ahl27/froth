@@ -1,0 +1,34 @@
+.initArithmeticFunctions <- function(){
+  ## Arithmetic
+  .fdefine('+', \() {.doword('apply', `+`, 2L)})
+  .fdefine('sum', \() {.doword('apply', `+`, 2L)})
+  .fdefine('-', \() {.doword('apply', `-`, 2L)})
+  .fdefine('*', \() {.doword('apply', `*`, 2L)})
+  .fdefine('div', \() {.doword('apply', `/`, 2L)})
+  .fdefine('idiv', \() {.doword('apply', `%/%`, 2L)})
+  .fdefine('^', \() {.doword('apply', `^`, 2L)})
+  .fdefine('mod', \() {.doword('apply', `%%`, 2L)})
+  .fdefine('/mod', \() .parseline('dup2 idiv rot mod'))
+  .fdefine('1+', \() {.doword('apply', \(x) x+1, 1L)})
+  .fdefine('1-', \() {.doword('apply', \(x) x-1, 1L)})
+  .fdefine('2+', \() {.doword('apply', \(x) x+2, 1L)})
+  .fdefine('2-', \() {.doword('apply', \(x) x-2, 1L)})
+  .fdefine('2*', \() {.doword('apply', \(x) x*2, 1L)})
+  .fdefine('2/', \() {.doword('apply', \(x) x/2, 1L)})
+  .fdefine('negate', \() {.doword('apply', `-`, 1L)})
+  .fdefine('abs', \() {.doword('apply', abs, 1L)})
+  .fdefine('min', \() {.doword('apply', min, 2L)})
+  .fdefine('max', \() {.doword('apply', max, 2L)})
+  .fdefine('sqrt', \() {.doword('apply', sqrt, 1L)})
+}
+
+.initArithmeticAliases <- function(){
+  .falias("%", 'mod')
+  .falias("/", 'div')
+  .falias("%/%", 'idiv')
+  .falias("pow", '^')
+  .falias("times", "*")
+  .falias('++', '1+')
+  .falias('--', '1-')
+  .falias('neg', 'negate')
+}
