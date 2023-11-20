@@ -4,7 +4,7 @@
 
 froth is a FORTH implementation for R (or at least, it will be).
 This implementation comes with a number of differences from other FORTHs:
-- uses R operators for arithmetic, so `x y z */` and `x y z * /` produce the same result
+- uses R operators for arithmetic, so `3 2 /` returns `1.5`
 - arbitrary R objects can be pushed onto the stack
 - built-in R `print` methods; use `.R` to format according to the print method for the top of the parameter stack
 - TRUE/FALSE are evaluated R-like rather than FORTH-like (-1 is FALSE, 1 is TRUE, 'A' is FALSE)
