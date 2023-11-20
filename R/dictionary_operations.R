@@ -15,13 +15,18 @@
   f <- froth.env$Dict[[word]]
   if(is(f, "FrothUserEntry")){
     .parseLine(f)
-    return(0L)
+    return(.ok())
   }
   while(is(f, "FrothAlias"))
     f <- froth.env$Dict[[f]]
   if(is.null(f)){
+    ## handling variable names
+    if(word %in% names(froth.env$vars)){
+      push(structure(0L, names=word, class='FrothVariableAddress'))
+      return(.ok())
+    }
     message(word, ' ?')
-    return(2L)
+    return(.warning(NULL))
   }
   f(...)
 }

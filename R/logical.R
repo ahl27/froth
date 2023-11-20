@@ -20,7 +20,6 @@
 .initLogicalAliases <- function(){
   ## Unary
   .falias('not', 'invert')
-  .falias('!', 'invert')
   .falias('~', 'invert')
   .falias('&', 'and')
   .falias('|', 'or')

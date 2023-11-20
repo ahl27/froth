@@ -8,7 +8,7 @@
   .fdefine('(', \() {. <- ''; while(. != ')' && !is.null(.)) . <- pop_op(); .ok()})
   .fdefine('noop', .ok)
   .fdefine('abort"', .abort)
-  .fdefine('reset', \() .initPairlist("Stack"))
+  .fdefine('reset', \() {.onAttach(); .ok()})
 }
 
 .initCoreAliases <- function(){

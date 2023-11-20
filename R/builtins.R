@@ -6,6 +6,7 @@
   .initArithmeticFunctions()
   .initLogicalFunctions()
   .initControlFunctions()
+  .initVariableFunctions()
 }
 
 .initAliases <- function(){
@@ -16,4 +17,5 @@
   .initArithmeticAliases()
   .initLogicalAliases()
   .initControlAliases()
+  .initVariableAliases()
 }
