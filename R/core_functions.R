@@ -7,7 +7,7 @@
   })
   .fdefine(':', .compile)
   .fdefine('swap', \() dign(1L))
-  .fdefine('2swap', \() {dign(2L); dign(2L); .ok()})
+  .fdefine('2swap', \() {dign(3L); dign(3L); .ok()})
   .fdefine('dup',\() {push(peek(froth.env$Stack)); .ok()})
   .fdefine('2dup', \() .parseLine('swap dup rot swap dup rot'))
   .fdefine('dig', \() {. <- pop(); dign(.)})

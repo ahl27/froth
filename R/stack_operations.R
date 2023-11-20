@@ -18,6 +18,10 @@ peek <- function(stack=froth.env$Stack){
 
 pop <- function(){
   v <- peek()
+  if(is.null(v)){
+    .warning("stack is empty.")
+    return(v)
+  }
   assign("Stack",
          .Call("pop", froth.env$Stack, PACKAGE='froth'),
          env=froth.env)
@@ -34,8 +38,11 @@ popn <- function(n){
 
 dign <- function(n){
   if(is.null(n) || !is.numeric(n))
-    .warning("invalid input to dig!")
+    return(.warning("invalid input to dig!"))
   n <- as.integer(n)
+  if(n >= length(froth.env$Stack))
+    return(.warning("stack underflow!"))
+
   assign("Stack",
          .Call("dign", froth.env$Stack, n, PACKAGE='froth'),
          env=froth.env)

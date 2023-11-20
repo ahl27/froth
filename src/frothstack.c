@@ -16,13 +16,11 @@ inline SEXP peek(SEXP stack){
 
 SEXP dign(SEXP stack, SEXP n){
   int depth = INTEGER(n)[0];
-  //Rprintf("%d deep\n", depth);
   SEXP cur = stack;
   for(int i=0; i<depth-1; i++){
     if(CAR(cur) == R_NilValue)
       return(R_NilValue);
-    cur = CDR(stack);
-    //Rprintf("\tv: %d\n", REAL(CAR(cur))[0]);
+    cur = CDR(cur);
   }
 
   SEXP tmp = PROTECT(CADR(cur));
