@@ -1,6 +1,6 @@
 # froth: FORTH for R
 
-<img src="./froth.png" width="400" class="center"/>
+<img src="./man/figures/froth.png" width="400" class="center"/>
 
 froth is a FORTH implementation for R (or at least, it will be).
 This implementation comes with a number of differences from other FORTHs:
@@ -13,12 +13,12 @@ This implementation comes with a number of differences from other FORTHs:
 - Use of R lists for internal arrays; arrays of bytes are not supported
 
 I've just started development, but this README will be updated as I get further in this project.
-So far I'm maybe 1/3rd of the way to a working first version. This will (likely) not be a 1:1 copy
+So far I'm maybe 80% of the way to a working first version. This will (likely) not be a 1:1 copy
 of Gforth, I think I'd rather have a forth implementation that is robust and works in R than one
 that exacly imitates existing Gforth. But...tbd.
 
 Implementation proceeds in the order that words are introduced in [the FORTH tutorial](https://www.forth.com/starting-forth/).
-So far I have implemented everything up to chapter 5, with a few exceptions mentioned below.
+So far I have implemented everything through chapter 8, with a few exceptions mentioned below.
 
 ## TODOs after finishing implementing the tutorial
 - FORGET word (will save this for last, definitions will currently overwrite previous ones)

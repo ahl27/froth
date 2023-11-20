@@ -24,6 +24,9 @@
     if(word %in% names(froth.env$vars)){
       push(structure(0L, names=word, class='FrothVariableAddress'))
       return(.ok())
+    } else if (word %in% names(.GlobalEnv)){
+      push(.GlobalEnv[[word]])
+      return(.ok())
     }
     message(word, ' ?')
     return(.warning(NULL))
