@@ -33,7 +33,5 @@ Useful links:
 }
 \author{
 \strong{Maintainer}: Aidan Lakshman \email{ahl27@pitt.edu}
-
 }
 \keyword{internal}
-}

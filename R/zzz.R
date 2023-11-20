@@ -25,6 +25,3 @@ froth.env <- new.env(hash=TRUE, parent=emptyenv())
   .initAliases()
   packageStartupMessage("Done!")
 }
-
-.onDetach <- function(libname, pkgname){
-}

@@ -22,13 +22,13 @@
 push <- function(obj){
   assign("Stack",
          .Call("push", froth.env$Stack, obj, PACKAGE='froth'),
-         env=froth.env)
+         envir=froth.env)
   .ok()
 }
 push_operation <- function(obj){
   assign("PStack",
          .Call("push", froth.env$PStack, obj, PACKAGE='froth'),
-         env=froth.env)
+         envir=froth.env)
   .ok()
 }
 
@@ -44,7 +44,7 @@ pop <- function(){
   }
   assign("Stack",
          .Call("pop", froth.env$Stack, PACKAGE='froth'),
-         env=froth.env)
+         envir=froth.env)
   v
 }
 
@@ -66,7 +66,7 @@ dign <- function(n){
 
   assign("Stack",
          .Call("dign", froth.env$Stack, n, PACKAGE='froth'),
-         env=froth.env)
+         envir=froth.env)
   .ok()
 }
 
@@ -75,7 +75,7 @@ pop_op <- function(){
   if(!is.null(v)){
     assign("PStack",
            .Call("pop", froth.env$PStack, PACKAGE='froth'),
-           env=froth.env)
+           envir=froth.env)
   }
   v
 }

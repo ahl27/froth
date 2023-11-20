@@ -1,4 +1,6 @@
 useDynLib(froth)
 
+importFrom("methods", "is")
+
 export(.initDictionary)
 export(froth)

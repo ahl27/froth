@@ -8,7 +8,7 @@
   .fdefine('idiv', \() {.doword('apply', `%/%`, 2L)})
   .fdefine('^', \() {.doword('apply', `^`, 2L)})
   .fdefine('mod', \() {.doword('apply', `%%`, 2L)})
-  .fdefine('/mod', \() .parseline('dup2 idiv rot mod'))
+  .fdefine('/mod', \() .parseLine('dup2 idiv rot mod'))
   .fdefine('1+', \() {.doword('apply', \(x) x+1, 1L)})
   .fdefine('1-', \() {.doword('apply', \(x) x-1, 1L)})
   .fdefine('2+', \() {.doword('apply', \(x) x+2, 1L)})
