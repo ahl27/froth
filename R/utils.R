@@ -9,7 +9,17 @@
   invisible(1L)
 }
 
-.warning <- function(w){
-  message("Warning:", w)
+.warning <- function(w=NULL){
+  if(!is.null(w))
+    message("Warning:", w)
   invisible(2L)
+}
+
+.finishedloop <- function(normal=TRUE){
+  ## normal=FALSE is for early termination like LEAVE or WHILE
+  invisible(ifelse(normal, 3L, 4L))
+}
+
+.initPairlist <- function(n){
+  assign(n, .Call("initFrothStack", PACKAGE = 'froth'), envir=froth.env)
 }

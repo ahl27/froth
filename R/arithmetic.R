@@ -20,6 +20,8 @@
   .fdefine('min', \() {.doword('apply', min, 2L)})
   .fdefine('max', \() {.doword('apply', max, 2L)})
   .fdefine('sqrt', \() {.doword('apply', sqrt, 1L)})
+  .fdefine('*/', \() .parseLine("rot * swap /"))
+  .fdefine('*/mod', \() .parseLine("rot * swap /mod"))
 }
 
 .initArithmeticAliases <- function(){

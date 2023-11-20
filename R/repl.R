@@ -8,19 +8,23 @@
   .ok()
 }
 
+.evalWord <- function(f){
+  if(is.null(f))
+    return(.ok())
+  if(!is.na(suppressWarnings(as.numeric(f)))){
+    push(as.numeric(f))
+    return(.ok())
+  }
+  .doword(f)
+}
+
 .evalPStack <- function(){
-  repeat{
-    f <- pop_op()
-    if(is.null(f))
-      return(0L)
-    if(!is.na(suppressWarnings(as.numeric(f)))){
-      push(as.numeric(f))
-      next
-    }
-    status <- .doword(f)
-    if(status!=0L)
+  while(!is.null(f <- pop_op())){
+    status <- .evalWord(f)
+    if(status != .ok())
       return(status)
   }
+  .ok()
 }
 
 froth <- function(){
@@ -30,7 +34,7 @@ froth <- function(){
     .parseLine(readline(prompt="fr> "))
     status <- .evalPStack()
     if(status==1L) break
-    if(status==0L)
+    if(status==.ok())
       message("ok.")
   }
   invisible()

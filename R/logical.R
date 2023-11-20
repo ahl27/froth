@@ -21,7 +21,7 @@
   ## Unary
   .falias('not', 'invert')
   .falias('!', 'invert')
-  .falias('!', '~')
+  .falias('~', 'invert')
   .falias('&', 'and')
   .falias('|', 'or')
 

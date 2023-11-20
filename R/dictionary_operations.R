@@ -34,3 +34,29 @@
   .userdefine(n, trimws(defn))
   .ok()
 }
+
+dictionary <- function(){
+  p <- vapply(froth.env$Dict, \(entry){
+    if(is(entry, "FrothDictEntry")) return(0L)
+    else if(is(entry, "FrothAlias")) return(1L)
+    return(2L)
+  }, integer(1L))
+  np <- names(froth.env$Dict)
+  p[np==''] <- 3L
+  message("Built-in Words:")
+  biw <- paste(np[p==0L], collapse=' ')
+  message(biw)
+  cat('\n')
+  message("Aliases:")
+  amp <- np[p==1L]
+  amp <- paste0(amp, ' (', unlist(froth.env$Dict[p==1L]), ') ')
+  message(amp)
+  cat('\n')
+  message("User Definitions:")
+  for(i in which(p==2L)){
+    l <- paste(np[i], ' (', froth.env$Dict[[i]], ')', collapse='')
+    message(l)
+  }
+  cat('\n')
+  invisible(0L)
+}
