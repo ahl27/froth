@@ -10,6 +10,7 @@ This implementation comes with a number of differences from other FORTHs:
 - TRUE/FALSE are evaluated R-like rather than FORTH-like (-1 is FALSE, 1 is TRUE, 'A' is FALSE)
 - obfuscated memory (no direct or emulated hardware-level memory access)
 - no distinction between compiled and interpreted words (loops are possible outside of definitions!)
+- Use of R lists for internal arrays; arrays of bytes are not supported
 
 I've just started development, but this README will be updated as I get further in this project.
 So far I'm maybe 1/3rd of the way to a working first version. This will (likely) not be a 1:1 copy
