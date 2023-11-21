@@ -15,7 +15,12 @@
 
 
 .catString <- function(){
-  while((. <- pop_op()) != '"' && !is.null(.))
+  while(!is.null(. <- pop_op(FALSE))){
+    if(grepl('\"$', .)){
+      cat(substring(., 1, nchar(.)-1L), '')
+      break
+    }
     cat(., '')
+  }
   .ok()
 }

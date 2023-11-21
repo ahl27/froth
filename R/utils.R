@@ -11,7 +11,7 @@
 
 .warning <- function(w=NULL){
   if(!is.null(w))
-    message("Warning:", w)
+    message("Warning: ", w)
   invisible(2L)
 }
 

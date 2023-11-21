@@ -43,8 +43,9 @@ froth.RDefine <- function(name, fun, nargs){
     if(is.numeric(nargs)) nargs <- as.integer(nargs)
     else stop("'nargs' must be an integer!")
   }
+  if(!is.character(name) || length(name) != 1L) stop("Name must be a character vector of length 1!")
   if(!is.function(fun)) stop("fun must be a function!")
-  .fdefine(name, \() {.doword('multiapply', fun, nargs)})
+  .fdefine(tolower(name), \() {.doword('multiapply', fun, nargs)})
   invisible(.ok())
 }
 

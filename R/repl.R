@@ -1,7 +1,7 @@
 .parseLine <- function(l){
   # split the line by characters
   # load onto processing stack in reverse order
-  ss <- rev(strsplit(tolower(l), ' ')[[1]])
+  ss <- rev(strsplit(l, ' ')[[1]])
   for(token in ss){
     push_operation(token)
   }
@@ -37,9 +37,10 @@
 froth <- function(){
   if(!interactive())
     stop("Froth REPL is only available in interactive mode")
+  assign("ts", list(), envir=froth.env)
   repeat{
     l <- readline(prompt="fr> ")
-    while(l=='' || grepl("\\\\ *$", l))
+    while(grepl("\\\\ *$", l))
       l <- trimws(paste(l, readline(prompt="  + ")))
     .parseLine(l)
 

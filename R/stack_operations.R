@@ -1,5 +1,6 @@
 #### Basic Stack operations
 .initStackFunctions <- function(){
+  .fdefine('clear', \() {.initPairlist("Stack"); .ok()})
   .fdefine('swap', \() dign(1L))
   .fdefine('2swap', \() {dign(3L); dign(3L); .ok()})
   .fdefine('dup',\() {push(peek(froth.env$Stack)); .ok()})
@@ -39,7 +40,7 @@ peek <- function(stack=froth.env$Stack){
 pop <- function(){
   v <- peek()
   if(is.null(v)){
-    .warning("stack is empty.")
+    stop("stack is empty.", call.=FALSE)
     return(v)
   }
   assign("Stack",
@@ -70,12 +71,13 @@ dign <- function(n){
   .ok()
 }
 
-pop_op <- function(){
+pop_op <- function(lowercase=TRUE){
   v <- peek(froth.env$PStack)
   if(!is.null(v)){
     assign("PStack",
            .Call("pop", froth.env$PStack, PACKAGE='froth'),
            envir=froth.env)
   }
+  if(lowercase && !is.null(v)) v <- tolower(v)
   v
 }

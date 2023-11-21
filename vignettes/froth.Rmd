@@ -1,0 +1,251 @@
+---
+title: "froth"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{froth}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introduction
+
+Forth is a pretty darn cool language. Despite being older than C, Forth is a high level, typeless, stack-oriented programming language that doubles as an extremely lighweight operating system. Think BASIC, but...cooler.
+
+The beauty of Forth is its simplicity. The system is comprised of a single data stack and a dictionary, essentially a linked list containing definitions called "words". Each word links to executable code. When a user enters text, the interpreter traverses the dictionary for each entered word and executes the corresponding code. Forth's stack-oriented design means usage of variables is limited. 
+
+`froth` brings a Forth-like system to R. You can drop into a command-line editor, or call Forth operations from R. Since `froth` runs on top of R, it supports all of R's data structures. `froth` is not as fast as modern implementations of Forth, but this package is more intended as a fun way to play with Forth-style syntax than as a replacement for existing Forths. However, stack-oriented algorthms do have their advantages, and you may find that your R code could benefit from `froth`!
+
+This vignette details a crash course on `froth`-style Forth, using the excellent guide on forth.com as a template.
+
+# Fundamental `froth`
+
+`froth` attempts to stick close to the original conventions of Froth. Let's walk through the basics using the built-in commandline.
+
+```{r, eval=FALSE}
+library(froth)
+## start the command line
+froth()
+```
+
+You should see your console change to look like the following:
+```
+> library(froth)
+> froth()
+fr>
+```
+
+This `fr>` signals that you're currently in the `froth` environment. 
+Let's test it by pressing `ENTER`:
+
+```
+fr>
+ok.
+fr>
+```
+
+`froth` will acknowledge successfully completed commands with `ok.`.
+In this case, we didn't provide any commands, so `froth` will simply do nothing and acknowledge you. 
+
+Let's try a new command:
+```
+fr> 45 emit
+-ok.
+```
+Notice how the return is now `-ok.`? This is because `froth` ran the commands `45` and `emit` before returning. `45` pushes the number 45 onto the stack, and `emit` prints the top value of the stack interpreting it as an ASCII value. 45 happens to correspond to a dash in ASCII, so we get a dash printed!
+
+Now, it would certainly be possible to print out lines by just repeating this command over and over:
+```
+fr> 45 emit 45 emit 45 emit 45 emit 45 emit
+-----ok.
+```
+...but this gets a little tiresome. Instead, let's tell `froth` a shortcut for when we want to print a dash:
+
+```
+fr> : DASH 45 emit ;
+ok.
+fr> DASH
+-ok.
+```
+
+What happened here? The colon `:` tells `froth` that we're starting a definition. The next word (`DASH`) gives the name for this definition, and the remaining words define what it does. The semicolon `;` ends the definition. In this case, we're telling `froth`: "whenever you see the word 'dash', replace it with `45 emit`." After that, we call `dash` and it prints out a dash. Note that words are not case-sensitive; `dash`, `dAsH`, and `DASH` will all work. These names with associated definitions are called *words*!
+
+We can even make words that include words. This word prints out an arbitrary number of dashes (I'll explain how it works later):
+```
+fr> : DASHES 0 do dash loop ;
+ok.
+fr> 10 dashes
+----------ok.
+```
+
+Now, let's make a word that prints out an ASCII letter `F`, for froth. We're going to add in a few more new words: `CR`, which prints a new line, and `124 emit`, which prints a pipe (`|`).
+```
+fr> : PIPE 124 emit ;
+ok.
+fr> : LETTER_F 47 emit 4 dashes cr pipe 2 dashes cr pipe cr ;
+/----
+|--
+|
+ok.
+```
+
+It's not as pretty as the asterisk F in *Starting FORTH*, but what can ya do.
+
+## The Dictionary
+
+The dictionary in FORTH is a list of words defined sequentially. `froth` initializes some words when it first loads, and then user-defined words are added sequentially to it. When you input a line of text, `froth` splits the command by spaces and searches for each word in the dictionary. If it finds the word, it executes the related code. If not, it returns an error message.
+
+This means you **must** separate each command by a space! For example:
+```
+fr> :star 42 emit ;
+:star ?
+```
+`froth` couldn't understand this command, and responded with `:star ?`. This is because `:star` isn't a defined word--in order to make this definition work, we have to space-separate the colon from the other words.
+
+```
+fr> : star 42 emit ;
+ok.
+fr> star
+*ok.
+```
+
+Emitting values character by character gets old pretty fast. We can use the words `."` and `"` to print whole strings:
+```
+fr> ." Hello, world!"
+Hello, world! ok.
+```
+Note the space separation between `."` and the string. The ending `"` is part of the string, so it doesn't need to be space separated.
+
+`froth` also has some special words. We encountered one of these before when we input `45`--this put the number 45 onto the stack. If `froth` can't find a word in the dictionary, it checks to see if you've input a number. If so, it executes a special command that puts it onto the stack.
+
+## The Data Stack
+
+We've been talking a lot about the stack, but...what is it? If you're unfamiliar with the stack data structure, the concept is essentially the same as a tower of bricks. Each time we "add" to the stack, we place a brick on top of the tower. Each time we remove from the stack, we have to take the brick off the top, otherwise the entire stack would fall apart! This means that the most recently added brick is always the first one we remove. This concept is typically referred to as "Last In, First Out" (LIFO). 
+
+When we talk about stacks, we use the word "push" to refer to adding an item to the stack, and "pop" to refer to taking an item off the stack.
+
+Let's showcase this with an example. We're going to use a new word called `.`. The period takes the first element off the stack and tells you what it was (it pops an item). 
+
+```
+fr> 1
+ok.
+fr> 2
+ok.
+fr> 3
+ok.
+fr> . . .
+3 2 1 ok.
+```
+Note how the last element we added (3) was the first element we got back. LIFO in action.
+
+Stacks lend themselves well to a style of expression notation called reverse Polish notation (RPN), also called **postfix** notation. Most people are used to **infix** notation, in which operators are found in between their operands. This means that if you wanted to add two numbers `a` and `b`, you'd write `a + b`. Postfix notation instead puts the operator *after* the operands, meaning that we'd write the sum of `a` and `b` as `a b +`.
+
+While this may feel unintuitive, it does have a number of benefits. First, postfix notation has no need for parentheses or order of operations; the operations define the order they should be applied. For example:
+```
+(infix) a * (b+c) = a b c + * (postfix)
+(infix) (a*b) + (c*d) = a b * c d * + (postfix)
+```
+
+This works especially well for `froth`, since we have a stack already! If we write any operation in postfix notation, we'll get the result. Let's try that with some simple arithmetic:
+```
+fr> : pop_result . cr ;
+fr> 1 2 + pop_result
+3 
+ok.
+fr> 2 3 4 + * pop_result
+14
+ok.
+fr> 2 3 * 4 5 * + pop_result
+26
+```
+
+Walking through each of these expressions:
+
+- `1 2 + => 1 + 2 + 3`
+- `2 3 4 + * => 2 * (3+4) = 2*7 = 14`
+- `2 3 * 4 5 * + => (2*3) + (4*5) = 6 + 20 = 26`
+
+What is actually going on under the hood? Let's walk through `1 2 + pop_result`:
+
+1. `froth` reads `1`, and pushes a 1 onto the stack.
+2. `froth` reads `2`, and pushes a 2 onto the stack.
+3. `froth` reads `+`.
+4. `+` pops two items off the stack (2, 1).
+5. `+` adds the two items it just popped (1 + 2).
+6. `+` pushes the result of the operation (3) back onto the stack.
+7. `froth` reads `pop_result`, and looks up the definition (`. cr`).
+8. `pop_result` first calls `.`, which pops the first element of the stack (3).
+9. `pop_result` then calls `cr`, which prints a new line.
+10. `froth` sees no more commands, so it acknowledges with `ok.`
+
+A nice thing about postfix operators is we can implicitly act on whatever is on the stack. For example, it's relatively easy to define a word that doubles whatever is on the stack:
+```
+fr> : double 2 * ;
+ok.
+```
+Wait a second--doesn't `*` pop two values and then return? Here we've only defined a single value, 2!
+
+This construction is by design. `*` pops whatever the top two values of the stack are, multiplies them, then pushes the result. This means that, since we're only pushing a single value in `double`, the function will multiply whatever is on top of the stack by two and then return it.
+```
+fr> 1
+ok.
+fr> double double double double .
+16 ok.
+```
+
+## Watch out for the stack!
+
+It's important to note a major concern with this style of architecture. Let's return to our definition of `double`:
+```
+fr> : double 2 * ;
+ok.
+```
+I mentioned before that this allows us to arbitrarily double whatever is on top of the stack. However, what happens if there's nothing on top of the stack? Let's use the `clear` word to remove all elements from the stack, then run `double`:
+```
+fr> clear
+ok.
+fr> double
+Error: stack is empty.
+>
+```
+This is called a stack underflow error, and it kills our froth session. We can reinitialize it with `froth()` (and this will preserve all of our defined words), but it's important to exercise caution when dealing with the stack. Make sure that you're aware of what state your words expect and what state they leave the stack in!
+
+Conventional Forth communicates this by adding comments to words. Comments are added using the `( )` words, and are typically of the form `( before_state -- after_state )` (note space separation of parentheses; they're also words!). 
+
+For example:
+```
+fr> : DOUBLE ( n1 -- n2 ) 2 * ;
+ok.
+```
+
+In this case, `DOUBLE` expects to find a single number `n1` on the stack, and it replaces it with `n2`. In essence, we expect to find at least one value, and we end with one value.
+
+Another example:
+```
+fr> : SUM ( a b -- res ) + ;
+ok.
+```
+
+`SUM` is equivalent to the `+` operation. `+` expects to find at least two elements on the stack (`a,b`), and replaces them with `res`. 
+
+Operations don't have to replace. The notation for `emit` is simply `: emit ( n -- )`, since it pops an element off the stack but doesn't replace it.
+
+## Words in this chapter
+
+- `<NUMBER> ( -- n )` : pushes a number onto the stack
+- `emit ( n -- )` : prints the top number of the stack, interpreting as ASCII
+- `cr ( -- )`: prints a new line
+- `." xxx" ( -- )`: prints `xxx` on the terminal. Note that `"` terminates the string.
+- `: xxx yyy ; ( -- )` : defines a word `xxx` comprised of words `yyy`
+- `+ (a b -- n)`: adds `a+b`
+- `* (a b -- n)`: multiplies `a*b`
+- `clear ( x1 x2 ... -- )`: removes all elements of the stack
+
+Other related words:
+- `/ (a b -- n)`: divides `a / b`
+- `%/% (a b -- n)`: integer divides `a %/% b`
+- `mod (a b -- n)`: pushes the remainder of `a / b`
+- `^ (a b -- n)`: pushes `a ^ b`
