@@ -135,5 +135,8 @@ Do you see what's changed? There's one key difference between the outer two loop
 Indefinite loops keep going without a specified end point. These loops use `BEGIN...UNTIL` rather than `DO...LOOP`. The basic syntax is the same, except that `UNTIL` will check the stack for `TRUE`. If it finds `TRUE`, the loop terminates, and otherwise execution jumps back to `BEGIN`.
 
 ```
-fr> -5 BEGIN 1 + dup . UNTIL  
+fr> -5 BEGIN 1 + dup dup . UNTIL  
+-4 -3 -2 -1 0 1 ok.
 ```
+Remember that R interprets positive values as `TRUE`. Here we start with -5, then at each iteration of the loop we add 1 to it. We then duplicate it twice, print one of the copies, and then let `UNTIL` check the second copy. Once the value becomes 1, it is true and the loop exits.
+

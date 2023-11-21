@@ -16,6 +16,7 @@
   ## Other loop controls
   .fdefine('while', \() if(pop()) return(.ok()) else return(.finishedloop(FALSE)))
   .fdefine('leave', \() .finishedloop(FALSE))
+  .fdefine('until', .until)
   .fdefine('i', \() .loopcountval(0L))
   .fdefine('j', \() .loopcountval(1L))
   .fdefine('k', \() .loopcountval(2L))
@@ -76,7 +77,7 @@
 }
 
 .begin <- function(){
-  .setupLoop(NULL, TRUE, `!=`, 'begin', c('again', 'repeat', 'until'))
+  .setupLoop(FALSE, TRUE, `!=`, 'begin', c('again', 'repeat', 'until'))
   .evalLoop()
   .ok()
 }
