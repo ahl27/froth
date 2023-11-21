@@ -14,6 +14,7 @@ froth.reset <- function(){
 
 ## Execute a line of froth code
 froth.parse <- function(inputline){
+  .resetTempStacks()
   .parseLine(inputline)
   invisible(.evalPStack())
 }

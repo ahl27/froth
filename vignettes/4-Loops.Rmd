@@ -1,0 +1,139 @@
+---
+title: "loops"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{froth}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Loops
+
+Computers are excellent are performing the same task over and over and over again. In order to ensure that it's just the computer doing repetitive tasks (and not also the coder typing them out), most languages employ a type of operation called a loop. Loops come in two main flavors: definite and indefinite.
+
+## Definite loops
+
+Definite loops are ones in which you specify exactly how many times a certain process should happen. Just like in Forth, you specify these loops with `DO...LOOP`. Let's look at an example:
+```
+fr> 5 0 DO ." Hello!" CR LOOP
+Hello!
+Hello!
+Hello!
+Hello!
+Hello! 
+ok.
+```
+
+These types of loops have five main components: `END START DO xxx LOOP`. `END` and `START` specify the ending and starting values for our loop counter. Think of it like counting: we start at `START` and begin counting up to `END`. For every number we count, we do the stuff between `DO` and `LOOP`. 
+
+In this case, we've defined a loop with `5 0 DO ... LOOP`. This means that we'll start at 0 and count up to 5. At each value (0, 1, 2, 3, 4), we do the middle stuff, which in this case is printing `Hello!`. Note that we stop at `END` without doing the stuff again.
+
+It's often useful to be able to do stuff with the number we're currently at. For instance, what if we wanted to print out what number we're currently counting at before saying `Hello!`? In this case, we use the special word `I`, which copies the current value of the loop counter to the stack.
+
+```
+fr> 5 0 DO I . ." Hello!" CR LOOP
+0 Hello! 
+1 Hello! 
+2 Hello! 
+3 Hello! 
+4 Hello! 
+ok.
+```
+
+
+The `LOOP` command tells `froth` to add 1 to the loop counter. This means that you can use negative numbers and/or fractions as loop limits:
+
+```
+fr> 0 -2 DO ." looping!" LOOP
+looping! looping! ok.
+fr> 3.5 0.5 DO ." fraction!" LOOP
+fraction! fraction! fraction! ok.
+```
+
+Like with the examples in Chapter 1, you can make words that expect to find elements on the stack as input to a loop:
+```
+fr> : MULTIPLICATION ( n -- ) cr 11 1 do dup i * . loop drop ;
+ok.
+fr> 7 multiplication
+7 14 21 28 35 42 49 56 63 70 ok.
+```
+
+## More Complex Loops
+
+`if...then` statements can be nested within loops to make the computer do certain operations on certain loop iterations. For example:
+
+```
+fr> 64 0 do i 8 mod 0= if cr then ." *" loop
+* * * * * * * * 
+* * * * * * * * 
+* * * * * * * * 
+* * * * * * * * 
+* * * * * * * * 
+* * * * * * * * 
+* * * * * * * * 
+* * * * * * * * ok.
+```
+This loop proceeds from 0 to 64. If the loop counter is equivalent to a multiple of 8 (`i 8 mod 0= if`), then it prints a newline. Either way, it prints a star.
+
+Just like with `if...then` statements, we can also nest loops. For example:
+```
+fr> : multip ( n -- ) cr 5 1 do dup i * . loop drop ;
+ok.
+fr> : table ( -- ) cr 5 1 do i multip loop ;
+1 2 3 4 
+2 4 6 8 
+3 6 9 12 
+4 8 12 16 ok.
+```
+
+This produces a (small) multiplication table. If you change the loop limits, you can change how big the table is.
+
+The built-in words `I` copies the current loop counter to the stack. If you wanted to had nested loops and wanted to access the outer loop counter from an inner loop, `J` copies that value to the stack. `K` performs a similar operation, but returns the loop counter two levels up. For example:
+```
+fr> 2 0 DO 2 0 DO 2 0 DO I J K . . . CR LOOP LOOP LOOP
+0 0 0 
+0 0 1 
+0 1 0 
+0 1 1 
+1 0 0 
+1 0 1 
+1 1 0 
+1 1 1 
+ok.
+```
+
+We have three nested loops. The outermost one executes twice, counting from 0 to 2. The middle loop executes twice *per outer loop*, counting from 2 to 4 each time. The inner loop executes twice per middle loop, counting from 4 to 6 each time. In all, the outer loop runs twice, the middle loop 4 times, and the inner loop 8 times. From the innermost loop, we use `I` to get the loop counter, `j` to get the second loop counter, and `K` to get the outermost loop counter.
+
+We also don't have to always increment the loop value by 1. Instead, we can use the `+LOOP` word, which expects a value on the stack and increments the loop counter by that amount. For example, we can modify our previous triple loop:
+
+```
+fr> 10 0 DO 4 0 DO 0 2 DO I J K . . . CR -1 +LOOP 2 +LOOP 5 +LOOP
+0 0 2 
+0 0 1 
+0 0 0 
+0 2 2 
+0 2 1 
+0 2 0 
+5 0 2 
+5 0 1 
+5 0 0 
+5 2 2 
+5 2 1 
+5 2 0 
+ok.
+```
+Now the outermost loop iterates from 0 to 10 by 5 (`10 0 DO ... 5 +LOOP`), the second loop iterates from 0 to 4 by 2 (`4 0 DO ... 2 +LOOP`), and the innermost loop iterates from 2 to 0 by -1 (`0 2 DO ... -1 +LOOP`). 
+
+Do you see what's changed? There's one key difference between the outer two loops and the inner loop of the previous example. The outer loops iterate as long as they're *less than* the end value, but the inner loop iterates as long as its *greater than or equal to* the end value. When you use a loop with a negative `+LOOP` value, keep in mind that the loop will iterate an additional time compared to the positive direction. For example, `5 0 DO ... 1 +LOOP` iterates 5 times, whereas `0 5 DO ... -1 +LOOP` iterates 6 times.
+
+## Indefinite Loops
+
+Indefinite loops keep going without a specified end point. These loops use `BEGIN...UNTIL` rather than `DO...LOOP`. The basic syntax is the same, except that `UNTIL` will check the stack for `TRUE`. If it finds `TRUE`, the loop terminates, and otherwise execution jumps back to `BEGIN`.
+
+```
+fr> -5 BEGIN 1 + dup . UNTIL  
+```

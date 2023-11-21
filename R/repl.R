@@ -33,12 +33,13 @@
 .resetTempStacks <- function(){
   .initPairlist("PStack")
   .initPairlist("CStack")
+  assign("ts", list(), envir=froth.env)
 }
 
 froth <- function(){
   if(!interactive())
     stop("Froth REPL is only available in interactive mode")
-  assign("ts", list(), envir=froth.env)
+  .resetTempStacks()
   repeat{
     l <- readline(prompt="fr> ")
     while(grepl("\\\\ *$", l))

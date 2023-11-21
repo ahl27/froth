@@ -16,9 +16,9 @@
   ## Other loop controls
   .fdefine('while', \() if(pop()) return(.ok()) else return(.finishedloop(FALSE)))
   .fdefine('leave', \() .finishedloop(FALSE))
-  .fdefine('i', \() .loopcountval(1L))
-  .fdefine('j', \() .loopcountval(2L))
-  .fdefine('k', \() .loopcountval(3L))
+  .fdefine('i', \() .loopcountval(0L))
+  .fdefine('j', \() .loopcountval(1L))
+  .fdefine('k', \() .loopcountval(2L))
   .fdefine('loopcounter', \() {. <- pop(); .loopcountval(.)})
   .fdefine('loopend', .finishedloop)
 }
@@ -87,8 +87,9 @@
   .ok()
 }
 
-.loopcountval <- function(idx){
-  push(attr(froth.env$ts[[idx]], 'cur'))
+.loopcountval <- function(offset){
+  l <- length(froth.env$ts)
+  push(attr(froth.env$ts[[l-offset]], 'cur'))
   .ok()
 }
 
@@ -100,10 +101,10 @@
 
   ## This construction is to handle nested loop structures
   seenloop <- 1L
-  while(seenloop != 0 && !is.null(. <- pop_op())){
+  while(seenloop != 0 && !is.null(. <- pop_op(FALSE))){
     ts <- .Call("push", ts, ., PACKAGE='froth')
-    if(. == startword) seenloop <- seenloop + 1L
-    if(. %in% endwords) seenloop <- seenloop - 1L
+    if(tolower(.) == startword) seenloop <- seenloop + 1L
+    if(tolower(.) %in% endwords) seenloop <- seenloop - 1L
   }
 
   if(seenloop != 0L) return(.warning("loop terminated unexpectedly"))
