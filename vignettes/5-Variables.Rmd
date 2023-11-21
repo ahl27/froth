@@ -1,0 +1,35 @@
+---
+title: "variables"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{froth}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Variables, Constants, and Arrays
+
+Forth-like languages are nice because they don't require a lot of variables. However, sometimes there's a problem that requires saving a particular value for later usage that can't be on the stack. This is where variables, constants, and arrays come in.
+
+## Variables
+
+## Constants
+
+## Arrays
+
+## Words in this chapter
+- `VARIABLE xxx`: creates a variable named `xxx`
+- `! ( n addr -- )`: stores the value `n` at address `addr`
+- `@ ( addr -- n )`: copies the value at `addr` to the stack
+- `? ( addr -- )`: prints the value of `addr`
+- `+! ( n addr -- )`: adds the value `n` to the value at `addr`
+- `CONSTANT xxx (n -- )`: creates a constant called `xxx` that stores `n`; `xxx` returns `n` when called
+- `ALLOT ( addr ncells -- )`: allocates `ncells` cells at `addr`
+- `CELLS ( n -- )`: creates a memory address offset for arrays
+- `FILL ( addr n val -- )`: fills `n` cells of memory beginning at `addr` with `val`
+- `ERASE ( addr n -- )`: fills `n` cells of memory beginning at `addr` with 0
+

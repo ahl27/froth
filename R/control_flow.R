@@ -14,9 +14,10 @@
   .fdefine('+loop', \(){. <- pop(); .loop(.)})
 
   ## Other loop controls
-  .fdefine('while', \() if(pop()) return(.ok()) else return(.finishedloop(FALSE)))
+  .fdefine('while', \() if(as.logical(pop())) return(.ok()) else return(.finishedloop(FALSE)))
   .fdefine('leave', \() .finishedloop(FALSE))
   .fdefine('until', .until)
+  .fdefine('repeat', .repeat)
   .fdefine('i', \() .loopcountval(0L))
   .fdefine('j', \() .loopcountval(1L))
   .fdefine('k', \() .loopcountval(2L))
@@ -28,14 +29,13 @@
   .falias('then', 'noop')
 
   ## unconditional branches
-  .falias('again', 'noop')
-  .falias('repeat', 'noop')
+  .falias('again', 'repeat')
 }
 
 .if <- function(shortcirc=FALSE){
   if(!shortcirc)
     tx_cstack()
-  if(shortcirc || !peek(froth.env$CStack)){
+  if(shortcirc || !as.logical(peek(froth.env$CStack))){
     while((. <- pop_op()) != 'then' && !is.null(.))
       if(.=='if') .if(TRUE) else if(!shortcirc && .=='else') break
   }
@@ -44,7 +44,7 @@
 }
 
 .else <- function(shortcirc=FALSE){
-  if(shortcirc || pop_cstack()){
+  if(shortcirc || as.logical(pop_cstack())){
     while((.<-pop_op()) != 'then' && !is.null(.))
       next
   }
@@ -84,7 +84,16 @@
 
 .until <- function(){
   . <- pop()
-  attr(froth.env$ts[[length(froth.env$ts)]], 'cur') <- .
+  attr(froth.env$ts[[length(froth.env$ts)]], 'cur') <- as.logical(.)
+  .ok()
+}
+
+.repeat <- function(){
+  l <- length(froth.env$ts)
+  if(l==0){
+    return(.warning("LOOP call outside loop body"))
+  }
+  attr(froth.env$ts[[l]], 'cur') <- !attr(froth.env$ts[[l]], 'end')
   .ok()
 }
 
