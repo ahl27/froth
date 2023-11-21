@@ -1,0 +1,59 @@
+---
+title: "arithmetic_and_stacks"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{froth}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Arithmetic and Stack Operators
+
+## More Arithmetic
+
+In the last section, we learned some basic arithmetic using `+` and `*`. However, `froth` incorporates a host of arithmetic expressions. Eagle-eyed readers may have spotted that we've only been working with commutative operations, meaning the order doesn't matter (`a+b = b+a`). What happens when we use non-commutative expressions, such as division or exponentiation?
+
+When `froth` executes words, it always treats the top of the stack as the *last* argument to the expression. This means that, for something like `a b /`, `b` is on the top of the stack and the result is `a / b`. `froth` uses R for its mathematical operations, so you don't have to worry about things like converting between integers and doubles, or double vs. single length numbers.
+
+The following mathematical operations are all built into `froth`:
+
+- `/ ( a b -- n )`: division (`5 2 / => 2.5`)
+- `%/% ( a b -- n)`: integer division (`5 2 %/% => 2`)
+- `mod ( a b -- rem )`: remainder when dividing `a / b`
+- `/mod ( a b -- rem quot )`: integer divides `a %/% b`, pushes the remainder and then the quotient
+- `^ ( a b -- n )`: raises `a^b`
+- `negate ( a -- n )`: negates `a`
+- `abs ( a -- n )`: takes the absolute value of `a`
+- `min ( a b -- min )`: pushes `min(a,b)`
+- `max ( a b -- max )`: pushes `max(a,b)`
+- `sqrt ( a -- root )`: pushes `sqrt(a)`
+
+## Stack Operators
+
+Unfortunately, there are some problems that just can't be solved with stacks and postfix...at least, not without more tools. Consider the equation `(a-b)/c`. In postfix, this would be `a b - c /`. Now, if we wanted to write a word with definition `( c a b -- d )` that applies the function `(a-b)/c`, you'd find that it isn't quite possible with the tools we have. Defining `: SOLUTION? - /` would instead apply `c / (a - b)`, which isn't quite right. What we need is a way to *swap* the top two values, so that we run `(a-b)/c`.
+
+This is where stack operators come in handy. The operator we're looking for is the aptly named `SWAP ( a b -- b a )`. which swaps the first two elements of the stack. Using this, we can write our definition:
+```
+fr> : TRYTHIS ( c a b -- d ) - swap / ;
+ok.
+fr> 4 2 1 trythis .
+0.25 ok.
+```
+`(2-1)/4 = 1/4 = 0.25`, so this works! Here are a couple other stack operators that are often useful:
+
+- `SWAP ( a b -- b a )`: swap top two stack elements
+- `DUP ( n -- n n )`: duplicate the top stack element
+- `OVER ( a b -- a b a )`: duplicate the second element to the top of the stack
+- `ROT ( a b c -- b c a )`: rotate the third item to the top
+- `DROP ( n -- )`: discard the top element of the stack
+- `.S ( -- )`: print out the contents of the stack
+
+We also have a set of stack operators that work on *pairs* of numbers, but perform the same functions:
+
+- `2SWAP ( a b c d -- c d a b )`: swap the top two pairs
+- `2DUP ( a b -- a b a b )`: duplicate the top pair
+- `2OVER ( p1 p2 -- p1 p2 p1 )`: duplicate the second pair (`p1`) to the top
+- `2DROP ( a b -- )`: discard the top pair

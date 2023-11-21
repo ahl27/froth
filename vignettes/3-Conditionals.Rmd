@@ -1,0 +1,141 @@
+---
+title: "conditionals"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{froth}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Conditionals and Branching
+
+A major component of computers is being able to make decisions. If you've worked with other programming languages, you'll be familiar with common terms like `if` and `else`.
+
+Let's look at a quick example to introduce conditionals:
+```
+fr> : IS_TWO? ( n -- n ) dup 2 = if ." It's two!" then ;
+ok.
+fr> 2 is_two?
+It's two! ok.
+```
+
+The complete definition is `dup 2 = if ." xxx" then`. We have a few new words we haven't seen before here, so lets step through this definition:
+
+1. `dup` duplicates the top element of the stack
+2. `2` pushes a 2 onto the stack
+3. <New Word> `=` pops the top two values and pushes `TRUE` if they're equal and `FALSE` otherwise
+4. <New Word> `if` checks if the top of stack is `TRUE`; if not, it skips to `then`
+5. `." xxx"` prints `xxx`
+6. `then` signals the end of the `if` statement
+
+Thus, we get the following behavior:
+```
+fr> 2 is_two?
+It's two! ok.
+fr> 1 is_two?
+ok.
+```
+Note how in the second case, we have no output, since the value pushed is not equal to 2. It would be nice to have some output to tell us this, which is where `else` comes in. `else` executes statements only if the `if` branch did not execute. For example:
+```
+fr> : IS_TWO? ( n -- n ) dup 2 = if ." It's two!" else ." Not two :(" then ;
+ok.
+fr> 2 is_two?
+It's two! ok.
+fr> 1 is_two?
+Not two :( ok.
+```
+`then` statements end the conditional. It's important to note that everything after `then` will execute *regardless of whether the `if` block executed or not*. You **must** include a `then` to close an if statement, or else the interpreter won't know where to skip to after the end of interpretation.
+
+We can also nest `if` statements. For this example, we'll use `<`, which functions exactly like `=` except that it pushes `TRUE` if `a < b` and `FALSE` otherwise.
+
+```
+fr> : is_big? ( a -- a ) dup 10 < if ." Small" else dup 20 < if ." Medium" else ." Big" then then ." number" cr ; 
+ok.
+fr> 5 is_big?
+Small number 
+ok.
+fr> 15 is_big?
+Medium number 
+ok.
+fr> 25 is_big?
+Big number 
+ok.
+```
+
+Writing long functions like this can be a little annoying. We can use the `\` to break up lines without executing functions, which can help make them more readable:
+
+```
+fr> : is_big? ( a -- a ) \
+  + dup 10 <             \
+  + if                   \
+  +    ." Small"         \
+  + else dup 20 <        \
+  +   if ." Medium"      \
+  +   else ." Big"       \
+  +   then               \
+  + then                 \
+  + ." number" ; 
+ok.
+```
+The interpreter will add the `+` to signify that it's waiting for you to finish the line. If you get stuck, use `CTRL+C` to quit.
+
+So what is happening here? It's a function that expects a number on the stack and doesn't consume it.
+
+1. `dup` duplicates the number
+2. `10 <` pushes `TRUE` if the number less than 10 and `FALSE` otherwise
+3. if `TRUE` on the stack, print "Small" and go to (8)
+4. `dup` duplicates the number
+5. `20 <` pushes `TRUE` if the number less than 20 and `FALSE` otherwise
+6. if `TRUE` on the stack, print "Medium" and go to (8)
+7. print "Big"
+8. print "number"
+
+**Note:** Every `if` needs exactly one `then`!
+
+There are many comparators available, not just `=` and `<`:
+- `=`: are the top two elements equal?
+- `<`: is the top element greater than the first?
+- `>`: is the top element less than the first?
+- `<>`: are the top two elements not equal?
+- `0=`: is the top element zero?
+- `0<`: is the top element greater than zero?
+- `0>`: is the top element less than zero?
+- `<=`, `>=` are defined as one would expect
+
+`if` uses R's analysis to check if the top value evaluates to `TRUE`. This means that truthy values like `1` or `10` will evaluate to `TRUE`, whereas falsy values like `0`, `-1`, or `'a'` will evaluate to false.
+
+## Logical Operators
+
+Just like in other programming languages, `froth` supports a number of logical operators. 
+
+- `AND`: push `TRUE` if the top two elements are both `TRUE`
+- `OR`: push `TRUE` if at least one of the top two elements are `TRUE`
+- `XOR`: push `TRUE` if exactly one of the top two elements is `TRUE`
+- `NOT`: push `TRUE` if the top element is `FALSE` and vice-versa
+
+Some words come with built-in checks. For example, `?DUP` duplicates the top value only if it is not zero. For error-handling, you can use `ABORT"`. `ABORT"` checks the stack for a value; if it is `TRUE`, it clears the stacks and prints an error message.
+
+## Words in this chapter
+- `if`: if top of stack is `TRUE`, executes. Else jumps to the next `else` or `then` block.
+- `else`: executes commands until `then` only if the preceding `if` did not execute.
+- `then`: terminates an `if` or `if...else` block.
+- `\`: signals to the interpreter that you're making a newline without running commands
+- `=`: are the top two elements equal?
+- `<`: is the top element greater than the first?
+- `>`: is the top element less than the first?
+- `<>`: are the top two elements not equal?
+- `0=`: is the top element zero?
+- `0<`: is the top element greater than zero?
+- `0>`: is the top element less than zero?
+- `<=`: is top element greater than or equal to the second?
+- `>=`: is top element less than or equal to the second?
+- `AND`: push `TRUE` if the top two elements are both `TRUE`
+- `OR`: push `TRUE` if at least one of the top two elements are `TRUE`
+- `XOR`: push `TRUE` if exactly one of the top two elements is `TRUE`
+- `NOT`: push `TRUE` if the top element is `FALSE` and vice-versa
+- `?DUP`: duplicate top value if it is nonzero
+- `ABORT"`: abort if top value true, print error message (terminated by `"`)
