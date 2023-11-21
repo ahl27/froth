@@ -242,10 +242,182 @@ Operations don't have to replace. The notation for `emit` is simply `: emit ( n 
 - `: xxx yyy ; ( -- )` : defines a word `xxx` comprised of words `yyy`
 - `+ (a b -- n)`: adds `a+b`
 - `* (a b -- n)`: multiplies `a*b`
+- `. (n -- )`: pops the top element of stack and prints it
 - `clear ( x1 x2 ... -- )`: removes all elements of the stack
 
-Other related words:
-- `/ (a b -- n)`: divides `a / b`
-- `%/% (a b -- n)`: integer divides `a %/% b`
-- `mod (a b -- n)`: pushes the remainder of `a / b`
-- `^ (a b -- n)`: pushes `a ^ b`
+# Arithmetic and Stack Operators
+
+## More Arithmetic
+
+In the last section, we learned some basic arithmetic using `+` and `*`. However, `froth` incorporates a host of arithmetic expressions. Eagle-eyed readers may have spotted that we've only been working with commutative operations, meaning the order doesn't matter (`a+b = b+a`). What happens when we use non-commutative expressions, such as division or exponentiation?
+
+When `froth` executes words, it always treats the top of the stack as the *last* argument to the expression. This means that, for something like `a b /`, `b` is on the top of the stack and the result is `a / b`. `froth` uses R for its mathematical operations, so you don't have to worry about things like converting between integers and doubles, or double vs. single length numbers.
+
+The following mathematical operations are all built into `froth`:
+
+- `/ ( a b -- n )`: division (`5 2 / => 2.5`)
+- `%/% ( a b -- n)`: integer division (`5 2 %/% => 2`)
+- `mod ( a b -- rem )`: remainder when dividing `a / b`
+- `/mod ( a b -- rem quot )`: integer divides `a %/% b`, pushes the remainder and then the quotient
+- `^ ( a b -- n )`: raises `a^b`
+- `negate ( a -- n )`: negates `a`
+- `abs ( a -- n )`: takes the absolute value of `a`
+- `min ( a b -- min )`: pushes `min(a,b)`
+- `max ( a b -- max )`: pushes `max(a,b)`
+- `sqrt ( a -- root )`: pushes `sqrt(a)`
+
+## Stack Operators
+
+Unfortunately, there are some problems that just can't be solved with stacks and postfix...at least, not without more tools. Consider the equation `(a-b)/c`. In postfix, this would be `a b - c /`. Now, if we wanted to write a word with definition `( c a b -- d )` that applies the function `(a-b)/c`, you'd find that it isn't quite possible with the tools we have. Defining `: SOLUTION? - /` would instead apply `c / (a - b)`, which isn't quite right. What we need is a way to *swap* the top two values, so that we run `(a-b)/c`.
+
+This is where stack operators come in handy. The operator we're looking for is the aptly named `SWAP ( a b -- b a )`. which swaps the first two elements of the stack. Using this, we can write our definition:
+```
+fr> : TRYTHIS ( c a b -- d ) - swap / ;
+ok.
+fr> 4 2 1 trythis .
+0.25 ok.
+```
+`(2-1)/4 = 1/4 = 0.25`, so this works! Here are a couple other stack operators that are often useful:
+
+- `SWAP ( a b -- b a )`: swap top two stack elements
+- `DUP ( n -- n n )`: duplicate the top stack element
+- `OVER ( a b -- a b a )`: duplicate the second element to the top of the stack
+- `ROT ( a b c -- b c a )`: rotate the third item to the top
+- `DROP ( n -- )`: discard the top element of the stack
+- `.S ( -- )`: print out the contents of the stack
+
+We also have a set of stack operators that work on *pairs* of numbers, but perform the same functions:
+
+- `2SWAP ( a b c d -- c d a b )`: swap the top two pairs
+- `2DUP ( a b -- a b a b )`: duplicate the top pair
+- `2OVER ( p1 p2 -- p1 p2 p1 )`: duplicate the second pair (`p1`) to the top
+- `2DROP ( a b -- )`: discard the top pair
+
+# Conditionals and Branching
+
+A major component of computers is being able to make decisions. If you've worked with other programming languages, you'll be familiar with common terms like `if` and `else`.
+
+Let's look at a quick example to introduce conditionals:
+```
+fr> : IS_TWO? ( n -- n ) dup 2 = if ." It's two!" then ;
+ok.
+fr> 2 is_two?
+It's two! ok.
+```
+
+The complete definition is `dup 2 = if ." xxx" then`. We have a few new words we haven't seen before here, so lets step through this definition:
+
+1. `dup` duplicates the top element of the stack
+2. `2` pushes a 2 onto the stack
+3. <New Word> `=` pops the top two values and pushes `TRUE` if they're equal and `FALSE` otherwise
+4. <New Word> `if` checks if the top of stack is `TRUE`; if not, it skips to `then`
+5. `." xxx"` prints `xxx`
+6. `then` signals the end of the `if` statement
+
+Thus, we get the following behavior:
+```
+fr> 2 is_two?
+It's two! ok.
+fr> 1 is_two?
+ok.
+```
+Note how in the second case, we have no output, since the value pushed is not equal to 2. It would be nice to have some output to tell us this, which is where `else` comes in. `else` executes statements only if the `if` branch did not execute. For example:
+```
+fr> : IS_TWO? ( n -- n ) dup 2 = if ." It's two!" else ." Not two :(" then ;
+ok.
+fr> 2 is_two?
+It's two! ok.
+fr> 1 is_two?
+Not two :( ok.
+```
+`then` statements end the conditional. It's important to note that everything after `then` will execute *regardless of whether the `if` block executed or not*. You **must** include a `then` to close an if statement, or else the interpreter won't know where to skip to after the end of interpretation.
+
+We can also nest `if` statements. For this example, we'll use `<`, which functions exactly like `=` except that it pushes `TRUE` if `a < b` and `FALSE` otherwise.
+
+```
+fr> : is_big? ( a -- a ) dup 10 < if ." Small" else dup 20 < if ." Medium" else ." Big" then then ." number" cr ; 
+ok.
+fr> 5 is_big?
+Small number 
+ok.
+fr> 15 is_big?
+Medium number 
+ok.
+fr> 25 is_big?
+Big number 
+ok.
+```
+
+Writing long functions like this can be a little annoying. We can use the `\` to break up lines without executing functions, which can help make them more readable:
+
+```
+fr> : is_big? ( a -- a ) \
+  + dup 10 <             \
+  + if                   \
+  +    ." Small"         \
+  + else dup 20 <        \
+  +   if ." Medium"      \
+  +   else ." Big"       \
+  +   then               \
+  + then                 \
+  + ." number" ; 
+ok.
+```
+The interpreter will add the `+` to signify that it's waiting for you to finish the line. If you get stuck, use `CTRL+C` to quit.
+
+So what is happening here? It's a function that expects a number on the stack and doesn't consume it.
+
+1. `dup` duplicates the number
+2. `10 <` pushes `TRUE` if the number less than 10 and `FALSE` otherwise
+3. if `TRUE` on the stack, print "Small" and go to (8)
+4. `dup` duplicates the number
+5. `20 <` pushes `TRUE` if the number less than 20 and `FALSE` otherwise
+6. if `TRUE` on the stack, print "Medium" and go to (8)
+7. print "Big"
+8. print "number"
+
+**Note:** Every `if` needs exactly one `then`!
+
+There are many comparators available, not just `=` and `<`:
+- `=`: are the top two elements equal?
+- `<`: is the top element greater than the first?
+- `>`: is the top element less than the first?
+- `<>`: are the top two elements not equal?
+- `0=`: is the top element zero?
+- `0<`: is the top element greater than zero?
+- `0>`: is the top element less than zero?
+- `<=`, `>=` are defined as one would expect
+
+`if` uses R's analysis to check if the top value evaluates to `TRUE`. This means that truthy values like `1` or `10` will evaluate to `TRUE`, whereas falsy values like `0`, `-1`, or `'a'` will evaluate to false.
+
+## Logical Operators
+
+Just like in other programming languages, `froth` supports a number of logical operators. 
+
+- `AND`: push `TRUE` if the top two elements are both `TRUE`
+- `OR`: push `TRUE` if at least one of the top two elements are `TRUE`
+- `XOR`: push `TRUE` if exactly one of the top two elements is `TRUE`
+- `NOT`: push `TRUE` if the top element is `FALSE` and vice-versa
+
+Some words come with built-in checks. For example, `?DUP` duplicates the top value only if it is not zero. For error-handling, you can use `ABORT"`. `ABORT"` checks the stack for a value; if it is `TRUE`, it clears the stacks and prints an error message.
+
+## Words in this chapter
+- `if`: if top of stack is `TRUE`, executes. Else jumps to the next `else` or `then` block.
+- `else`: executes commands until `then` only if the preceding `if` did not execute.
+- `then`: terminates an `if` or `if...else` block.
+- `\`: signals to the interpreter that you're making a newline without running commands
+- `=`: are the top two elements equal?
+- `<`: is the top element greater than the first?
+- `>`: is the top element less than the first?
+- `<>`: are the top two elements not equal?
+- `0=`: is the top element zero?
+- `0<`: is the top element greater than zero?
+- `0>`: is the top element less than zero?
+- `<=`: is top element greater than or equal to the second?
+- `>=`: is top element less than or equal to the second?
+- `AND`: push `TRUE` if the top two elements are both `TRUE`
+- `OR`: push `TRUE` if at least one of the top two elements are `TRUE`
+- `XOR`: push `TRUE` if exactly one of the top two elements is `TRUE`
+- `NOT`: push `TRUE` if the top element is `FALSE` and vice-versa
+- `?DUP`: duplicate top value if it is nonzero
+- `ABORT"`: abort if top value true, print error message (terminated by `"`)

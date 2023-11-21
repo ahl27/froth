@@ -5,8 +5,8 @@
   .fdefine('and', \() {.doword('apply', `&`, 2L)})
   .fdefine('xor', \() {.doword('apply', `xor`, 2L)})
   .fdefine('0=', \() {.doword('apply', \(x) x==0, 1L)})
-  .fdefine('0<', \() {.doword('apply', \(x) x<0, 1L)})
-  .fdefine('0>', \() {.doword('apply', \(x) x>0, 1L)})
+  .fdefine('0<', \() {.doword('apply', \(x) x>0, 1L)})
+  .fdefine('0>', \() {.doword('apply', \(x) x<0, 1L)})
 
   ## Binary
   .fdefine('<', \() {.doword('apply', `<`, 2L)})

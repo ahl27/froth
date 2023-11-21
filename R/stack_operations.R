@@ -11,6 +11,7 @@
   .fdefine('2drop', \() .parseLine('drop drop'))
   .fdefine('rot', \(){dign(2L); dign(2L); .ok()})
   .fdefine('drop', \(){pop(); .ok()})
+  .fdefine('?dup', \(){. <- peek(); if(. != 0) push(.); .ok()})
   .fdefine('>R', \(){. <- pop(); push_operation(.)})
   .fdefine('R>', \(){. <- pop_op(); push(.)})
   .fdefine('R@', \() push(peek(froth.env$PStack)))
@@ -55,6 +56,26 @@ popn <- function(n){
     l[[i]] <- pop()
   }
   l
+}
+
+tx_cstack <- function(){
+  v <- pop()
+  assign("CStack",
+         .Call("push", froth.env$CStack, v, PACKAGE='froth'),
+         envir=froth.env)
+  .ok()
+}
+
+pop_cstack <- function(){
+  v <- peek(froth.env$CStack)
+  if(is.null(v)){
+    stop("stack is empty.", call.=FALSE)
+    return(v)
+  }
+  assign("Stack",
+         .Call("pop", froth.env$CStack, PACKAGE='froth'),
+         envir=froth.env)
+  v
 }
 
 dign <- function(n){

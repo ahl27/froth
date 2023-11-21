@@ -23,15 +23,16 @@
     status <- .evalWord(f)
     if(status != .ok()){
       if(status == .warning())
-        .clearPStack()
+        .resetTempStacks()
       return(status)
     }
   }
   .ok()
 }
 
-.clearPStack <- function(){
+.resetTempStacks <- function(){
   .initPairlist("PStack")
+  .initPairlist("CStack")
 }
 
 froth <- function(){

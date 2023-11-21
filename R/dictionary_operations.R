@@ -35,15 +35,16 @@
 }
 
 .compile <- function(){
-  n <- tolower(pop_op())
+  n <- pop_op()
   defn <- ''
-  while((. <- pop_op()) != ';' && !is.null(.))
+  while((. <- pop_op(FALSE)) != ';' && !is.null(.))
     defn <- paste(defn, .)
   .userdefine(n, trimws(defn))
   .ok()
 }
 
 froth.dictionary <- function(){
+  cutoff <- 8L
   p <- vapply(froth.env$Dict, \(entry){
     if(is(entry, "FrothDictEntry")) return(0L)
     else if(is(entry, "FrothAlias")) return(1L)
@@ -52,13 +53,27 @@ froth.dictionary <- function(){
   np <- names(froth.env$Dict)
   p[np==''] <- 3L
   message("Built-in Words:")
-  biw <- paste(np[p==0L], collapse=' ')
-  message(biw)
+  biw <- np[p==0L]
+  l <- ''
+  for(i in seq_along(biw)){
+    l <- paste(l, biw[i])
+    if(i %% cutoff == 0 || i == length(biw)){
+      message(substring(l, 2))
+      l <- ''
+    }
+  }
   cat('\n')
   message("Aliases:")
   amp <- np[p==1L]
-  amp <- paste0(amp, ' (', unlist(froth.env$Dict[p==1L]), ') ')
-  message(amp)
+  l <- ''
+  amp <- paste0(amp, ' (', unlist(froth.env$Dict[p==1L]), ')')
+  for(i in seq_along(amp)){
+    l <- paste(l, amp[i])
+    if(i %% floor(cutoff/2) == 0 || i == length(amp)){
+      message(substring(l, 2L))
+      l <- ''
+    }
+  }
   cat('\n')
   message("User Definitions:")
   for(i in which(p==2L)){
