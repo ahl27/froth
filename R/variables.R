@@ -71,3 +71,11 @@
 .isValidVar <- function(var){
   return(is(var,'FrothVariableAddress') && !is.null(names(var)))
 }
+
+print.FrothVariableAddress <- function(x, ...){
+  outstring <- paste0('addr <', names(x)[1L], ', cell ', x[[1]], ">")
+  print(outstring)
+}
+show.FrothVariableAddress <- function(object){
+  print(object)
+}

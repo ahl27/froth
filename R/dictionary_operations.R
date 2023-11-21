@@ -43,7 +43,7 @@
   .ok()
 }
 
-dictionary <- function(){
+froth.dictionary <- function(){
   p <- vapply(froth.env$Dict, \(entry){
     if(is(entry, "FrothDictEntry")) return(0L)
     else if(is(entry, "FrothAlias")) return(1L)

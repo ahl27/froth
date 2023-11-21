@@ -1,6 +1,23 @@
 useDynLib(froth)
 
-importFrom("methods", "is")
+importFrom("methods", "is", "show")
 
-export(.initDictionary)
 export(froth)
+
+export(froth.reset)
+export(froth.parse)
+export(froth.source)
+
+export(froth.RDefine)
+export(froth.RPush)
+export(froth.RPop)
+
+export(saveFrothSession)
+export(loadFrothSession)
+
+export(froth.dictionary)
+export(writeFrothDictionary)
+
+
+S3method(show, "FrothVariableAddress")
+S3method(print, "FrothVariableAddress")

@@ -21,17 +21,28 @@
 .evalPStack <- function(){
   while(!is.null(f <- pop_op())){
     status <- .evalWord(f)
-    if(status != .ok())
+    if(status != .ok()){
+      if(status == .warning())
+        .clearPStack()
       return(status)
+    }
   }
   .ok()
+}
+
+.clearPStack <- function(){
+  .initPairlist("PStack")
 }
 
 froth <- function(){
   if(!interactive())
     stop("Froth REPL is only available in interactive mode")
   repeat{
-    .parseLine(readline(prompt="fr> "))
+    l <- readline(prompt="fr> ")
+    while(l=='' || grepl("\\\\ *$", l))
+      l <- trimws(paste(l, readline(prompt="  + ")))
+    .parseLine(l)
+
     status <- .evalPStack()
     if(status==1L) break
     if(status==.ok())

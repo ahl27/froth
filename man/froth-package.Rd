@@ -3,6 +3,12 @@
 \alias{froth}
 
 \title{froth: FORTH for R}
+
+\usage{
+## Start a froth REPL
+froth()
+}
+
 \description{
 \if{html}{\figure{froth.png}{options: align='right' alt='logo' width='120'}}
 

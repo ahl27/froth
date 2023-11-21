@@ -1,8 +1,9 @@
 .initCoreFunctions <- function(){
   .fdefine('exit', .exit)
   .fdefine('inspect', \() {print(froth.env$Stack); .ok()})
-  .fdefine('words', dictionary)
+  .fdefine('words', froth.dictionary)
   .fdefine('apply', .apply)
+  .fdefine('multiapply', .multiapply)
   .fdefine(':', .compile)
   .fdefine('lit', \() {. <- pop_op(); push(.)})
   .fdefine('(', \() {. <- ''; while(. != ')' && !is.null(.)) . <- pop_op(); .ok()})
@@ -17,6 +18,7 @@
   .falias(')', 'noop')
   .falias('.s', 'inspect')
   .falias('xx', 'reset')
+  .falias(r"(\)", 'noop')
 }
 
 .abort <- function(){
@@ -30,8 +32,17 @@
   .warning()
 }
 
+## apply a function with a single return
 .apply <- function(f, nargs){
   . <- rev(lapply(seq_len(nargs), \(i) pop()))
   push(do.call(f, .))
+  .ok()
+}
+
+## apply a function with multiple returns
+.multiapply <- function(f, nargs){
+  . <- rev(lapply(seq_len(nargs), \(i) pop()))
+  for(r in rev(do.call(f, .)))
+    push(r)
   .ok()
 }
