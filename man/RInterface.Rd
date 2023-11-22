@@ -2,7 +2,6 @@
 \alias{froth.RDefine}
 \alias{froth.RPush}
 \alias{froth.RPop}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 Interface with froth from R
 }
@@ -14,7 +13,6 @@ froth.RPush(object)
 froth.RPop(nobj=1L)
 froth.RDefine(name, fun, nargs)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{object}{ An R object to push to the froth stack }
   \item{nobj}{ Number of objects to pop from the froth stack }

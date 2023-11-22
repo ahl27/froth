@@ -1,7 +1,6 @@
 \name{froth-parse-source}
 \alias{froth.parse}
 \alias{froth.source}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 Read/evaluate froth code from R
 }
@@ -12,7 +11,6 @@ Function to run froth code from R.
 froth.parse(inputline)
 froth.source(filepath)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{inputline}{ A string to parse with froth }
   \item{filepath}{ Path to a file containing froth or FORTH code to parse with froth }

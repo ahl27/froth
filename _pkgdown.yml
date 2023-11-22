@@ -28,16 +28,16 @@ navbar:
       text: Tutorial
       menu:
         - text: 1. Fundamental Froth
-          href: https://www.ahl27.com/froth/articles/1-FundamentalFroth.html
+          href: https://www.ahl27.com/froth/articles/FundamentalFroth.html
         - text: 2. Arithmetic and Stacks
-          href: https://www.ahl27.com/froth/articles/2-ArithmeticAndStacks.html
+          href: https://www.ahl27.com/froth/articles/ArithmeticAndStacks.html
         - text: 3. Conditionals
-          href: https://www.ahl27.com/froth/articles/3-Conditionals.html
+          href: https://www.ahl27.com/froth/articles/Conditionals.html
         - text: 4. Loops
-          href: https://www.ahl27.com/froth/articles/4-Loops.html
+          href: https://www.ahl27.com/froth/articles/Loops.html
         - text: 5. Variables
-          href: https://www.ahl27.com/froth/articles/5-Variables.html
+          href: https://www.ahl27.com/froth/articles/Variables.html
         - text: 6. Interfacing with R
-          href: https://www.ahl27.com/froth/articles/6-RInterface.html
+          href: https://www.ahl27.com/froth/articles/RInterface.html
         - text: Glossary
           href: https://www.ahl27.com/froth/articles/Glossary.html

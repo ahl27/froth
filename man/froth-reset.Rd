@@ -1,4 +1,4 @@
-\name{froth.reset}
+\name{froth-reset}
 \alias{froth.reset}
 
 \title{

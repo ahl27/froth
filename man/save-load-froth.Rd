@@ -2,7 +2,6 @@
 \alias{save-load-froth}
 \alias{saveFrothSession}
 \alias{loadFrothSession}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 Save/Load froth Sessions
 }
@@ -13,7 +12,6 @@ Methods to preserve user-defined entries and variables.
 saveFrothSession(file=NULL, ...)
 loadFrothSession(file=NULL)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{file}{ Path to a file used for saving/loading }
   \item{...}{ Additional arguments passed to \code{\link{saveRDS}}}

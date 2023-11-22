@@ -5,7 +5,7 @@ Authors@R:
     person(given="Aidan", family="Lakshman", email="ahl27@pitt.edu", 
 	   role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-9465-6785"))
-Description: froth is a FORTH implementation for R, allowing users to work in a stack-oriented language from the comfort of their favorite statistical computing software.
+Description: A Forth implementation for R, allowing users to work in a stack-oriented language from the comfort of their favorite statistical computing software.
 Depends: R (>= 4.3.0)
 Imports: methods
 Suggests:

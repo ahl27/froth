@@ -1,7 +1,6 @@
 \name{froth-dictionary}
 \alias{froth.dictionary}
 \alias{writeFrothDictionary}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 List/Export Installed froth Words
 }
