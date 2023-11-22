@@ -106,7 +106,7 @@ There are many comparators available, not just `=` and `<`:
 - `0>`: is the top element less than zero?
 - `<=`, `>=` are defined as one would expect
 
-`if` uses R's analysis to check if the top value evaluates to `TRUE`. This means that truthy values like `1` or `10` will evaluate to `TRUE`, whereas falsy values like `0`, `-1`, or `'a'` will evaluate to false.
+`if` uses R's `as.logical` to check if the top value evaluates to `TRUE`. This means that nonzero numbers will be treated as `TRUE`, whereas `0` will evaluate to false. Things that cannot be converted to logicals (e.g. `'a'`) will throw an error.
 
 ## Logical Operators
 

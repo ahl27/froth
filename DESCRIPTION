@@ -1,6 +1,6 @@
 Package: froth
 Title: FORTH for R
-Version: 0.0.1
+Version: 1.0.0
 Authors@R: 
     person(given="Aidan", family="Lakshman", email="ahl27@pitt.edu", 
 	   role = c("aut", "cre"),
@@ -12,7 +12,3 @@ License: GPL-3
 ByteCompile: true
 Encoding: UTF-8
 NeedsCompilation: yes
-Suggests: 
-    knitr,
-    rmarkdown
-VignetteBuilder: knitr
