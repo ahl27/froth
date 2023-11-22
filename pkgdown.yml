@@ -1,0 +1,17 @@
+pandoc: 2.19.2
+pkgdown: 2.0.7
+pkgdown_sha: ~
+articles:
+  1-FundamentalFroth: 1-FundamentalFroth.html
+  2-ArithmeticAndStacks: 2-ArithmeticAndStacks.html
+  3-Conditionals: 3-Conditionals.html
+  4-Loops: 4-Loops.html
+  5-Variables: 5-Variables.html
+  6-RInterface: 6-RInterface.html
+  Glossary: Glossary.html
+  froth: froth.html
+last_built: 2023-11-22T15:25Z
+urls:
+  reference: http://www.ahl27.com/froth/reference
+  article: http://www.ahl27.com/froth/articles
+
