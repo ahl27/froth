@@ -15,7 +15,7 @@ License: GPL-3
 ByteCompile: true
 Encoding: UTF-8
 NeedsCompilation: yes
-URL: https://www.ahl27.com/froth
+URL: https://www.ahl27.com/froth/
 BugReports: https://github.com/ahl27/froth/issues/new/choose
 VignetteBuilder: knitr
 

@@ -2,7 +2,7 @@
 
 
 /*** Called from R ***/
-inline SEXP initFrothStack(){
+inline SEXP initFrothStack(void){
   return CONS(R_NilValue, R_NilValue);
 }
 

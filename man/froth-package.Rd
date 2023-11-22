@@ -10,7 +10,7 @@ froth()
 }
 
 \description{
-\if{html}{\figure{froth.png}{options: align='right' alt='logo' width='120'}}
+\if{html}{\figure{froth.png}{options: alt='logo' width='120'}}
 
 \code{froth} is a FORTH implementation that runs on top of R. This allows users to enjoy the fun of stack-oriented program from within the comfort of R.
 
