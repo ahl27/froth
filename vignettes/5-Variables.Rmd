@@ -2,7 +2,7 @@
 title: "variables"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{froth}
+  %\VignetteIndexEntry{variables}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

@@ -2,7 +2,7 @@
 title: "conditionals"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{froth}
+  %\VignetteIndexEntry{conditionals}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

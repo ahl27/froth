@@ -2,7 +2,7 @@
 title: "fundamental_froth"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{froth}
+  %\VignetteIndexEntry{fundamentalfroth}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

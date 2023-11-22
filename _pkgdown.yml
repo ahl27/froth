@@ -1,0 +1,45 @@
+url: http://www.ahl27.com/froth/
+template:
+  bootstrap: 5
+  bootswatch: united
+
+home:
+  title: "froth: Forth for R"
+  home:
+  title: "Comparative Genomics with SynExtend and DECIPHER"
+  type: inverse
+
+
+navbar:
+  structure:
+    left: [intro, articles, reference, news]
+    right: [home, github]
+  components:
+    github:
+      icon: fa-github
+      href: https://github.com/ahl27/froth
+      aria-label: GitHub
+    home:
+      icon: fa-user
+      href: https://www.ahl27.com/tutorials
+      aria-label: Homepage
+    intro:
+      text: Overview
+      href: https://www.ahl27.com/froth/articles/froth.html
+    articles:
+      text: Tutorial
+      menu:
+        - text: Fundamental Froth
+          href: https://www.ahl27.com/froth/articles/fundamentalfroth.html
+        - text: Arithmetic and Stacks
+          href: https://www.ahl27.com/froth/articles/arithmeticstacks.html
+        - text: Conditionals
+          href: https://www.ahl27.com/froth/articles/conditionals.html
+        - text: Loops
+          href: https://www.ahl27.com/froth/articles/loops.html
+        - text: Variables
+          href: https://www.ahl27.com/froth/articles/variables.html
+        - text: Interfacing with R
+          href: https://www.ahl27.com/froth/articles/r-interface.html
+        - text: Glossary
+          href: https://www.ahl27.com/froth/articles/glossary.html

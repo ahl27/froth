@@ -8,7 +8,14 @@ Authors@R:
 Description: froth is a FORTH implementation for R, allowing users to work in a stack-oriented language from the comfort of their favorite statistical computing software.
 Depends: R (>= 4.3.0)
 Imports: methods
+Suggests:
+  markdown,
+  knitr
 License: GPL-3
 ByteCompile: true
 Encoding: UTF-8
 NeedsCompilation: yes
+URL: https://www.ahl27.com/froth
+BugReports: https://github.com/ahl27/froth/issues/new/choose
+VignetteBuilder: knitr
+

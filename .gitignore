@@ -10,3 +10,4 @@
 *.*.so
 .Rhistory
 inst/doc
+docs

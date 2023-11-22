@@ -2,7 +2,7 @@
 title: "arithmetic_and_stacks"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{froth}
+  %\VignetteIndexEntry{arithmeticstacks}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

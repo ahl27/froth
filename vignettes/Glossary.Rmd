@@ -2,7 +2,7 @@
 title: "Glossary"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{froth}
+  %\VignetteIndexEntry{glossary}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
