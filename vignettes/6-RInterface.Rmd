@@ -1,5 +1,5 @@
 ---
-title: "R_interface"
+title: "r-interface"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{r-interface}
