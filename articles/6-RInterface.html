@@ -41,12 +41,12 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-tutorial">Tutorial</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-tutorial">
-    <a class="external-link dropdown-item" href="https://www.ahl27.com/froth/articles/1-FundamentalFroth.html">Fundamental Froth</a>
-    <a class="external-link dropdown-item" href="https://www.ahl27.com/froth/articles/2-ArithmeticAndStacks.html">Arithmetic and Stacks</a>
-    <a class="external-link dropdown-item" href="https://www.ahl27.com/froth/articles/3-Conditionals.html">Conditionals</a>
-    <a class="external-link dropdown-item" href="https://www.ahl27.com/froth/articles/4-Loops.html">Loops</a>
-    <a class="external-link dropdown-item" href="https://www.ahl27.com/froth/articles/5-Variables.html">Variables</a>
-    <a class="external-link dropdown-item" href="https://www.ahl27.com/froth/articles/6-RInterface.html">Interfacing with R</a>
+    <a class="external-link dropdown-item" href="https://www.ahl27.com/froth/articles/1-FundamentalFroth.html">1. Fundamental Froth</a>
+    <a class="external-link dropdown-item" href="https://www.ahl27.com/froth/articles/2-ArithmeticAndStacks.html">2. Arithmetic and Stacks</a>
+    <a class="external-link dropdown-item" href="https://www.ahl27.com/froth/articles/3-Conditionals.html">3. Conditionals</a>
+    <a class="external-link dropdown-item" href="https://www.ahl27.com/froth/articles/4-Loops.html">4. Loops</a>
+    <a class="external-link dropdown-item" href="https://www.ahl27.com/froth/articles/5-Variables.html">5. Variables</a>
+    <a class="external-link dropdown-item" href="https://www.ahl27.com/froth/articles/6-RInterface.html">6. Interfacing with R</a>
     <a class="external-link dropdown-item" href="https://www.ahl27.com/froth/articles/Glossary.html">Glossary</a>
   </div>
 </li>
@@ -156,7 +156,7 @@ In this case, we’ll need 3 arguments. We can also pass a number to
 <span><span class="fu"><a href="../reference/froth-parse-source.html">froth.parse</a></span><span class="op">(</span><span class="st">"5 0 0.5 R_rnorm"</span><span class="op">)</span></span>
 <span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="fu"><a href="../reference/RInterface.html">froth.RPop</a></span><span class="op">(</span><span class="fl">5L</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">r</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1]  0.4304321  0.7907891  0.6048713 -0.3305367  0.0235409</span></span></code></pre>
+<pre><code><span><span class="co">## [1] -0.22802052 -0.06918257  1.02066248 -0.35564729 -0.23975892</span></span></code></pre>
 <p>It’s important to note that <code>froth</code> will pull the
 arguments in the same way it pulls arguments for internal functions.
 That is, the top of the stack becomes the last argument, the next
