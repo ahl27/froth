@@ -19,4 +19,4 @@ The beauty of Forth is its simplicity. The system is comprised of a single data 
 
 `froth` brings a Forth-like system to R. You can drop into a command-line editor, or call Forth operations from R. Since `froth` runs on top of R, it supports all of R's data structures. `froth` is not as fast as modern implementations of Forth, but this package is more intended as a fun way to play with Forth-style syntax than as a replacement for existing Forths. However, stack-oriented algorthms do have their advantages, and you may find that your R code could benefit from `froth`!
 
-The included vignettes detail a crash course on `froth`-style Forth, using the excellent guide on forth.com as a template.
+The included vignettes detail a crash course on `froth`-style Forth, using many examples based on the excellent guide on forth.com. If you find bugs or have any suggestions for additional features, feel free to let me know on GitHub!

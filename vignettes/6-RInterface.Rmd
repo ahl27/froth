@@ -17,24 +17,45 @@ One of the perks of `froth` is being able to run on top of R. To this end, there
 
 The first of these is `froth.parse`, which evaluates a character vector within a `froth` environment.
 ```{r}
+froth.parse("1 2 3 . . .")
+```
+This environment persists, so we can make multiple calls and have our stack still remember what's in it.
+```{r}
 froth.parse("1 2 3")
+froth.parse(". . .")
 ```
 
+However, this is just printing out the values. What if we wanted to actually `pop` a value from the `froth` stack to R? This is accomplished with `froth.RPop()`.
+```{r}
+froth.parse("1")
+x <- froth.RPop()
+x
+```
+You'll notice that the result is in a list. This is because `froth` just returns the entire top entry of the stack and relies on the user to process it further. 
 
-## Words in this chapter
-- `VARIABLE xxx`: creates a variable named `xxx`
-- `! ( n addr -- )`: stores the value `n` at address `addr`
-- `@ ( addr -- n )`: copies the value at `addr` to the stack
-- `? ( addr -- )`: prints the value of `addr`
-- `+! ( n addr -- )`: adds the value `n` to the value at `addr`
-- `CONSTANT xxx (n -- )`: creates a constant called `xxx` that stores `n`; `xxx` returns `n` when called
-- `ALLOT ( addr ncells -- )`: allocates `ncells` cells at `addr`
-- `CREATE xxx y1 , y2 , ... yn ,`: creates an array `xxx` with values `y1, y2, ... yn`
-- `CELLS ( n -- )`: creates a memory address offset for arrays
-- `FILL ( addr ncells val -- )`: fills `ncells` cells of memory beginning at `addr` with `val`
-- `ERASE ( addr ncells -- )`: fills `ncells` cells of memory beginning at `addr` with 0
-- `REALLOT ( addr ncells -- )`: reallots array at `addr` to have size `ncells`.
-- `EXTEND ( addr ncells -- )`: extends the array at `addr` by `ncells` cells
-- `LENGTH ( addr -- len )`: pushes the length of the array at `addr` onto the stack
-- `LENGTH? ( addr -- )`: prints the length of the array at `addr`
+It's also possible to push arbitrary R objects to `froth` using `froth.RPush`.
+```{r}
+froth.RPush(\(x) x**2)
+froth.parse('.s')
+```
 
+Now we have an R function on top of the stack! This stack state persists if we drop into a commandline, so you can push object from R, use `froth()` to work with them in `froth`, then return to R to pull them back (or do it all with `froth.parse`).
+
+R has a lot of nice functions, and not all of them are in `froth`. However, it's possible to ask `froth` to make its own version of an R function. Let's say we wanted to define a function `rnorm ( n mu sd -- x )` that calls `rnorm(n, mu, sd)` using the top three entries of the stack. We can use `froth.RDefine` for this. This function takes three arguments: the name of the new word in `froth`, the R function to associate with it, and the number of arguments to provide. In this case, we'll need 3 arguments. We can also pass a number to `froth.RPop()` to ask it for more than a single value.
+
+```{r}
+froth.parse('clear')
+froth.RDefine('R_rnorm', rnorm, 3L)
+froth.parse("5 0 0.5 R_rnorm")
+r <- unlist(froth.RPop(5L))
+r
+```
+It's important to note that `froth` will pull the arguments in the same way it pulls arguments for internal functions. That is, the top of the stack becomes the last argument, the next becomes the second to last, etc. This is equivalent to how arguments are parsed for words like `/` or `^`.
+
+## Saving and Loading
+
+A quick detail of some other important functions:
+
+- The functions `saveFrothSession` and `loadFrothSession` allow you to save and load a `froth` environment, respectively. This will save any variables and words you've defined from within `froth`. `froth.RDefine` words will not be saved.
+- `froth.source` is identical to `froth.parse`, except that it reads from a file rather than from a character vector.
+- `writeFrothDictionary` will write all your defined words to the console or (if a file is specified) to a file. This is a good utility for exporting your word definitions.

@@ -1,0 +1,102 @@
+---
+title: "Glossary"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{froth}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Glossary of Words
+You can list all the installed words in `froth` with the `WORDS` word, or use `froth.dictionary()` from R. The following is all the words referenced in the previous chapters.
+
+- `<NUMBER> ( -- n )` : pushes a number onto the stack
+- `emit ( n -- )` : prints the top number of the stack, interpreting as ASCII
+- `cr ( -- )`: prints a new line
+- `." xxx" ( -- )`: prints `xxx` on the terminal. Note that `"` terminates the string.
+- `: xxx yyy ; ( -- )` : defines a word `xxx` comprised of words `yyy`
+- `+ (a b -- n)`: adds `a+b`
+- `* (a b -- n)`: multiplies `a*b`
+- `. (n -- )`: pops the top element of stack and prints it
+- `clear ( x1 x2 ... -- )`: removes all elements of the stack
+- `reset ( -- )`: reset `froth` to defaults (wipe all user definitions, reinitialize all built-in definitions, reset all stacks)
+- `/ ( a b -- n )`: division (`5 2 / => 2.5`)
+- `%/% ( a b -- n)`: integer division (`5 2 %/% => 2`)
+- `mod ( a b -- rem )`: remainder when dividing `a / b`
+- `/mod ( a b -- rem quot )`: integer divides `a %/% b`, pushes the remainder and then the quotient
+- `^ ( a b -- n )`: raises `a^b`
+- `negate ( a -- n )`: negates `a`
+- `abs ( a -- n )`: takes the absolute value of `a`
+- `min ( a b -- min )`: pushes `min(a,b)`
+- `max ( a b -- max )`: pushes `max(a,b)`
+- `sqrt ( a -- root )`: pushes `sqrt(a)`
+- `SWAP ( a b -- b a )`: swap top two stack elements
+- `DUP ( n -- n n )`: duplicate the top stack element
+- `OVER ( a b -- a b a )`: duplicate the second element to the top of the stack
+- `ROT ( a b c -- b c a )`: rotate the third item to the top
+- `DROP ( n -- )`: discard the top element of the stack
+- `.S ( -- )`: print out the contents of the stack
+- `2SWAP ( a b c d -- c d a b )`: swap the top two pairs
+- `2DUP ( a b -- a b a b )`: duplicate the top pair
+- `2OVER ( p1 p2 -- p1 p2 p1 )`: duplicate the second pair (`p1`) to the top
+- `2DROP ( a b -- )`: discard the top pair
+- `>R ( n -- )`: moves the value on the parameter stack to the return stack
+- `R> ( -- n )`: moves the value on the return stack to the parameter stack
+- `R@ ( -- n )`: copies the value on the return stack to the parameter stack
+- `1+ ( n1 -- n2 )`: adds 1
+- `1- ( n1 -- n2 )`: subtracts 1
+- `2+ ( n1 -- n2 )`: adds 2
+- `2- ( n1 -- n2 )`: subtracts 2
+- `2* ( n1 -- n2 )`: multiplies by 2
+- `2/ ( n1 -- n2 )`: divides by 2
+- `*/ ( a b c -- n )`: pushes `(a*b) / c`
+- `*/mod ( a b c -- rem quot )`: pushes the remainder and quotient of `(a*b) %/% c`
+- `if`: if top of stack is `TRUE`, executes. Else jumps to the next `else` or `then` block.
+- `else`: executes commands until `then` only if the preceding `if` did not execute.
+- `then`: terminates an `if` or `if...else` block.
+- `\`: signals to the interpreter that you're making a newline without running commands
+- `=`: are the top two elements equal?
+- `<`: is the top element greater than the first?
+- `>`: is the top element less than the first?
+- `<>`: are the top two elements not equal?
+- `0=`: is the top element zero?
+- `0<`: is the top element greater than zero?
+- `0>`: is the top element less than zero?
+- `<=`: is top element greater than or equal to the second?
+- `>=`: is top element less than or equal to the second?
+- `AND`: push `TRUE` if the top two elements are both `TRUE`
+- `OR`: push `TRUE` if at least one of the top two elements are `TRUE`
+- `XOR`: push `TRUE` if exactly one of the top two elements is `TRUE`
+- `NOT`: push `TRUE` if the top element is `FALSE` and vice-versa
+- `?DUP`: duplicate top value if it is nonzero
+- `ABORT"`: abort if top value true, print error message (terminated by `"`)
+- `DO ( end start -- )`: starts a definite loop from `start` to `end`
+- `LOOP ( -- )`: increments the loop counter by 1
+- `+LOOP ( n -- )`: increments the loop counter by n
+- `I ( -- n )`: copies the current loop counter to the stack
+- `J ( -- n )`: copies the enclosing loop's counter to the stack
+- `K ( -- n )`: copies the enclosing loop's enclosing loop's counter to the stack
+- `BEGIN ( -- )`: starts an indefinite loop
+- `AGAIN ( -- )`: returns to `BEGIN`
+- `WHILE ( flag -- )`: if `flag`, continue; else jump to after `REPEAT`
+- `REPEAT ( -- )`: returns to `BEGIN` following `WHILE`
+- `LEAVE ( -- )`: leave the current loop immediately
+- `VARIABLE xxx`: creates a variable named `xxx`
+- `! ( n addr -- )`: stores the value `n` at address `addr`
+- `@ ( addr -- n )`: copies the value at `addr` to the stack
+- `? ( addr -- )`: prints the value of `addr`
+- `+! ( n addr -- )`: adds the value `n` to the value at `addr`
+- `CONSTANT xxx (n -- )`: creates a constant called `xxx` that stores `n`; `xxx` returns `n` when called
+- `ALLOT ( addr ncells -- )`: allocates `ncells` cells at `addr`
+- `CREATE xxx y1 , y2 , ... yn ,`: creates an array `xxx` with values `y1, y2, ... yn`
+- `CELLS ( n -- )`: creates a memory address offset for arrays
+- `FILL ( addr ncells val -- )`: fills `ncells` cells of memory beginning at `addr` with `val`
+- `ERASE ( addr ncells -- )`: fills `ncells` cells of memory beginning at `addr` with 0
+- `REALLOT ( addr ncells -- )`: reallots array at `addr` to have size `ncells`.
+- `EXTEND ( addr ncells -- )`: extends the array at `addr` by `ncells` cells
+- `LENGTH ( addr -- len )`: pushes the length of the array at `addr` onto the stack
+- `LENGTH? ( addr -- )`: prints the length of the array at `addr`
