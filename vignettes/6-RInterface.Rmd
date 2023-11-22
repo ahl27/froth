@@ -1,0 +1,40 @@
+---
+title: "R_interface"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{froth}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Using R with `froth`
+
+One of the perks of `froth` is being able to run on top of R. To this end, there are a number of functions designed to allow R users to interact with the `froth` environment without having to go into the commandline. 
+
+The first of these is `froth.parse`, which evaluates a character vector within a `froth` environment.
+```{r}
+froth.parse("1 2 3")
+```
+
+
+## Words in this chapter
+- `VARIABLE xxx`: creates a variable named `xxx`
+- `! ( n addr -- )`: stores the value `n` at address `addr`
+- `@ ( addr -- n )`: copies the value at `addr` to the stack
+- `? ( addr -- )`: prints the value of `addr`
+- `+! ( n addr -- )`: adds the value `n` to the value at `addr`
+- `CONSTANT xxx (n -- )`: creates a constant called `xxx` that stores `n`; `xxx` returns `n` when called
+- `ALLOT ( addr ncells -- )`: allocates `ncells` cells at `addr`
+- `CREATE xxx y1 , y2 , ... yn ,`: creates an array `xxx` with values `y1, y2, ... yn`
+- `CELLS ( n -- )`: creates a memory address offset for arrays
+- `FILL ( addr ncells val -- )`: fills `ncells` cells of memory beginning at `addr` with `val`
+- `ERASE ( addr ncells -- )`: fills `ncells` cells of memory beginning at `addr` with 0
+- `REALLOT ( addr ncells -- )`: reallots array at `addr` to have size `ncells`.
+- `EXTEND ( addr ncells -- )`: extends the array at `addr` by `ncells` cells
+- `LENGTH ( addr -- len )`: pushes the length of the array at `addr` onto the stack
+- `LENGTH? ( addr -- )`: prints the length of the array at `addr`
+

@@ -57,3 +57,90 @@ We also have a set of stack operators that work on *pairs* of numbers, but perfo
 - `2DUP ( a b -- a b a b )`: duplicate the top pair
 - `2OVER ( p1 p2 -- p1 p2 p1 )`: duplicate the second pair (`p1`) to the top
 - `2DROP ( a b -- )`: discard the top pair
+
+## Two stacks?
+
+`froth` actually has two stacks. The main one, the parameter stack, is what you'll spend the majority of your time working with. Whenever we "push to the stack", that's referring to the parameter stack. 
+
+However, `froth` also has a second stack called the Return Stack. It's possible for you to use this stack as a sort of "temporary space" to hold values while you process other things. It's very important to ensure you clear the values on this temporary stack before you finish processing! `froth` is much more forgiving than Forth on this point, but it's good to get in the practice of good Forth code.
+
+- `>R ( n -- )`: moves the value on the parameter stack to the return stack
+- `R> ( -- n )`: moves the value on the return stack to the parameter stack
+- `R@ ( -- n )`: copies the value on the return stack to the parameter stack
+
+This can sometimes be very useful. For instance, say we wanted to swap the second and third elements of the stack (that is, go from `2 3 1` to `3 2 1`). We can do this with:
+```
+fr> 2 3 1
+ok.
+fr> >R SWAP R>
+ok.
+fr> .s
+[[1]]
+[1] 1
+
+[[2]]
+[1] 2
+
+[[3]]
+[1] 3
+
+[[4]]
+NULL
+
+ok.
+```
+*Fundamental Forth* gives an excellent example of using these operators: suppose we want to write a function `quadratic ( a b c x -- n )` that returns `ax^2 + bx + c`.
+```
+fr> : QUADRATIC ( a b c x -- n ) >r swap rot r@ * + r> * + ; 
+ok.
+fr> 2 7 9 3 quadratic .
+48 ok.
+```
+
+## Other Miscellaneous operators
+
+For completeness, here are some other arithmetic operations:
+- `1+ ( n1 -- n2 )`: adds 1
+- `1- ( n1 -- n2 )`: subtracts 1
+- `2+ ( n1 -- n2 )`: adds 2
+- `2- ( n1 -- n2 )`: subtracts 2
+- `2* ( n1 -- n2 )`: multiplies by 2
+- `2/ ( n1 -- n2 )`: divides by 2
+
+We also have some funky double operators:
+- `*/ ( a b c -- n )`: pushes `(a*b) / c`
+- `*/mod ( a b c -- rem quot )`: pushes the remainder and quotient of `(a*b) %/% c`
+
+## Words in this chapter
+
+- `/ ( a b -- n )`: division (`5 2 / => 2.5`)
+- `%/% ( a b -- n)`: integer division (`5 2 %/% => 2`)
+- `mod ( a b -- rem )`: remainder when dividing `a / b`
+- `/mod ( a b -- rem quot )`: integer divides `a %/% b`, pushes the remainder and then the quotient
+- `^ ( a b -- n )`: raises `a^b`
+- `negate ( a -- n )`: negates `a`
+- `abs ( a -- n )`: takes the absolute value of `a`
+- `min ( a b -- min )`: pushes `min(a,b)`
+- `max ( a b -- max )`: pushes `max(a,b)`
+- `sqrt ( a -- root )`: pushes `sqrt(a)`
+- `SWAP ( a b -- b a )`: swap top two stack elements
+- `DUP ( n -- n n )`: duplicate the top stack element
+- `OVER ( a b -- a b a )`: duplicate the second element to the top of the stack
+- `ROT ( a b c -- b c a )`: rotate the third item to the top
+- `DROP ( n -- )`: discard the top element of the stack
+- `.S ( -- )`: print out the contents of the stack
+- `2SWAP ( a b c d -- c d a b )`: swap the top two pairs
+- `2DUP ( a b -- a b a b )`: duplicate the top pair
+- `2OVER ( p1 p2 -- p1 p2 p1 )`: duplicate the second pair (`p1`) to the top
+- `2DROP ( a b -- )`: discard the top pair
+- `>R ( n -- )`: moves the value on the parameter stack to the return stack
+- `R> ( -- n )`: moves the value on the return stack to the parameter stack
+- `R@ ( -- n )`: copies the value on the return stack to the parameter stack
+- `1+ ( n1 -- n2 )`: adds 1
+- `1- ( n1 -- n2 )`: subtracts 1
+- `2+ ( n1 -- n2 )`: adds 2
+- `2- ( n1 -- n2 )`: subtracts 2
+- `2* ( n1 -- n2 )`: multiplies by 2
+- `2/ ( n1 -- n2 )`: divides by 2
+- `*/ ( a b c -- n )`: pushes `(a*b) / c`
+- `*/mod ( a b c -- rem quot )`: pushes the remainder and quotient of `(a*b) %/% c`

@@ -222,6 +222,10 @@ ok.
 
 Operations don't have to replace. The notation for `emit` is simply `: emit ( n -- )`, since it pops an element off the stack but doesn't replace it.
 
+## When all goes wrong
+
+If you find yourself in a real pickle, the `RESET` word will completely reset the `froth` environment to when its first initialized. You can also use `CTRL+C` to kill any running processes, and `CLEAR` to delete the contents of the stack.
+
 ## Words in this chapter
 
 - `<NUMBER> ( -- n )` : pushes a number onto the stack
@@ -233,3 +237,4 @@ Operations don't have to replace. The notation for `emit` is simply `: emit ( n 
 - `* (a b -- n)`: multiplies `a*b`
 - `. (n -- )`: pops the top element of stack and prints it
 - `clear ( x1 x2 ... -- )`: removes all elements of the stack
+- `reset ( -- )`: reset `froth` to defaults (wipe all user definitions, reinitialize all built-in definitions, reset all stacks)

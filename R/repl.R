@@ -3,7 +3,7 @@
   # load onto processing stack in reverse order
   ss <- rev(strsplit(l, ' ')[[1]])
   for(token in ss){
-    push_operation(token)
+    push(token, "PStack")
   }
   .ok()
 }
@@ -33,6 +33,7 @@
 .resetTempStacks <- function(){
   .initPairlist("PStack")
   .initPairlist("CStack")
+  .initPairlist("RStack")
   assign("ts", list(), envir=froth.env)
 }
 

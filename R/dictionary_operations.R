@@ -36,6 +36,7 @@
 
 .compile <- function(){
   n <- pop_op()
+  while(n == '') n <- pop_op()
   defn <- ''
   while((. <- pop_op(FALSE)) != ';' && !is.null(.))
     defn <- paste(defn, .)

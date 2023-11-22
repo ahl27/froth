@@ -44,7 +44,7 @@
 }
 
 .else <- function(shortcirc=FALSE){
-  if(shortcirc || as.logical(pop_cstack())){
+  if(shortcirc || as.logical(pop("CStack"))){
     while((.<-pop_op()) != 'then' && !is.null(.))
       next
   }
