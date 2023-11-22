@@ -4,25 +4,25 @@
     <loc>http://www.ahl27.com/froth/404.html</loc>
   </url>
   <url>
-    <loc>http://www.ahl27.com/froth/articles/1-FundamentalFroth.html</loc>
+    <loc>http://www.ahl27.com/froth/articles/ArithmeticAndStacks.html</loc>
   </url>
   <url>
-    <loc>http://www.ahl27.com/froth/articles/2-ArithmeticAndStacks.html</loc>
+    <loc>http://www.ahl27.com/froth/articles/Conditionals.html</loc>
   </url>
   <url>
-    <loc>http://www.ahl27.com/froth/articles/3-Conditionals.html</loc>
-  </url>
-  <url>
-    <loc>http://www.ahl27.com/froth/articles/4-Loops.html</loc>
-  </url>
-  <url>
-    <loc>http://www.ahl27.com/froth/articles/5-Variables.html</loc>
-  </url>
-  <url>
-    <loc>http://www.ahl27.com/froth/articles/6-RInterface.html</loc>
+    <loc>http://www.ahl27.com/froth/articles/FundamentalFroth.html</loc>
   </url>
   <url>
     <loc>http://www.ahl27.com/froth/articles/Glossary.html</loc>
+  </url>
+  <url>
+    <loc>http://www.ahl27.com/froth/articles/Loops.html</loc>
+  </url>
+  <url>
+    <loc>http://www.ahl27.com/froth/articles/RInterface.html</loc>
+  </url>
+  <url>
+    <loc>http://www.ahl27.com/froth/articles/Variables.html</loc>
   </url>
   <url>
     <loc>http://www.ahl27.com/froth/articles/froth.html</loc>
@@ -52,7 +52,7 @@
     <loc>http://www.ahl27.com/froth/reference/froth-parse-source.html</loc>
   </url>
   <url>
-    <loc>http://www.ahl27.com/froth/reference/froth.reset.html</loc>
+    <loc>http://www.ahl27.com/froth/reference/froth-reset.html</loc>
   </url>
   <url>
     <loc>http://www.ahl27.com/froth/reference/index.html</loc>
