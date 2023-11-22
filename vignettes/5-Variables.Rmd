@@ -17,7 +17,74 @@ Forth-like languages are nice because they don't require a lot of variables. How
 
 ## Variables
 
+Let's say we want to store a value somewhere outside of the stack. We can initialize a variable using the `VARIABLE` word.
+```
+fr> VARIABLE testvar
+ok.
+```
+Nothing happened! That's because this word only allocates space for a variable without doing any other actions. We can now call the name of the variable at any time to push its address onto the stack. In Forth, this would be an actual memory address. `froth`, however, uses an abstracted memory map.
+```
+fr> test .s
+[[1]]
+[1] "addr <test, cell 0>"
+
+[[2]]
+NULL
+
+ok.
+```
+We can see the address of the variable at the top of the stack. We'll come back to the `cell 0` bit later.
+
+To store a value in a variable, we use `!`. We can copy the value in an address to the stick using `@`.
+```
+fr> variable newvar
+ok.
+fr> 20 newvar !
+ok.
+fr> newvar @ .
+20 ok.
+```
+Notice that for `!` we push the value first, then the address. It's also important to note that the variable retains its value even after calling `@`. 
+```
+fr> variable newvar
+ok.
+fr> 20 newvar !
+ok.
+fr> newvar dup @ . dup @ . @ .
+20 20 20 ok.
+```
+
+`@ .` is a pretty common call to inspect the value of a variable. In fact, it's so common that there's a shortcut word to perform both, `?`.
+
+```
+fr> variable newvar 20 newvar !
+ok.
+fr> newvar ?
+20 ok.
+```
+
+Variables are often useful as counters, using the `+!` command. `+!` is similar to `!`, except that it adds to the variable rather than replacing it.
+```
+fr> variable newvar 
+ok.
+fr> 0 newvar !
+ok.
+fr> 5 0 do 1 newvar +! loop newvar ?
+5 ok.
+```
+
 ## Constants
+
+Sometimes we just need a name for a value. Variables that will never change values are called constants, and can be fittingly be defined with the `CONSTANT` word.
+
+```
+fr> 100 CONSTANT hundred
+ok.
+fr> hundred .
+100 ok.
+```
+
+Constants avoid the hassle of dealing with addresses, and can be accessed slightly faster than variables. Calling the name of the variable copies its value directly onto the stack.
 
 ## Arrays
 

@@ -34,9 +34,25 @@
   })
   .fdefine('allot', \(){
     . <- pop()
+    var <- names(froth.env$vars)[length(froth.env$vars)]
+    froth.env$vars[[var]] <- c(froth.env$vars[[var]], vector('list', .))
+    .ok()
+  })
+  .fdefine('extend', \(){
+    . <- pop()
     var <- pop()
     if(!.isValidVar(var)) return(.warning("invalid variable specified!"))
     froth.env$vars[[names(var)]] <- c(froth.env$vars[[names(var)]], vector('list', .))
+    .ok()
+  })
+  .fdefine('realloc', \(){
+    . <- pop()
+    var <- pop()
+    if(!.isValidVar(var)) return(.warning("invalid variable specified!"))
+    l <- vector('list', .)
+    for(i in seq_along(l)) l[[i]] <- froth.env$vars[[names(var)]][[i]]
+    froth.env$vars[[names(var)]] <- l
+    .ok()
   })
   .fdefine('fill', \(){
     . <- pop()
