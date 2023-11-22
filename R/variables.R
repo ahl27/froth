@@ -1,27 +1,44 @@
 .initVariableFunctions <- function(){
   .fdefine('variable', \(){
-    froth.env$vars[[pop_op()]] <- vector('list', 0L)
+    l <- list(0L)
+    froth.env$vars[[pop_op()]] <- l
     .ok()
   })
   .fdefine('!', \(){
     var <- pop()
     if(!.isValidVar(var)) return(.warning("invalid variable specified!"))
-    froth.env$vars[[names(var)]][[var+1L]] <- pop()
+    if(length(froth.env$vars[[names(var)]]) >= (var+1L))
+      froth.env$vars[[names(var)]][[var+1L]] <- pop()
+    else
+      return(.warning("array accessed out of bounds!"))
     .ok()
   })
   .fdefine('@', \(){
     var <- pop()
     if(!.isValidVar(var)) return(.warning("invalid variable specified!"))
-    push(froth.env$vars[[names(var)]][[var+1L]])
+    if(length(froth.env$vars[[names(var)]]) >= (var+1L))
+      push(froth.env$vars[[names(var)]][[var+1L]])
+    else
+      return(.warning("array accessed out of bounds!"))
     .ok()
   })
+  .fdefine('length', \(){
+    var <- pop()
+    if(!.isValidVar(var)) return(.warning("invalid variable specified!"))
+    push(length(froth.env$vars[[names(var)]]))
+    .ok()
+  })
+  .fdefine('length?', \() .parseLine('length .'))
   .fdefine('+!', \(){
     var <- pop()
     if(!.isValidVar(var)) return(.warning("invalid variable specified!"))
-    froth.env$vars[[names(var)]][[var+1L]] <- froth.env$vars[[names(var)]][[var+1L]] + pop()
+    if(length(froth.env$vars[[names(var)]]) >= (var+1L))
+      froth.env$vars[[names(var)]][[var+1L]] <- froth.env$vars[[names(var)]][[var+1L]] + pop()
+    else
+      return(.warning("array accessed out of bounds!"))
     .ok()
   })
-  .fdefine('?', \(varname=NULL){.doword("@"); .doword('.')})
+  .fdefine('?', \(){r <- .doword("@"); if(r!=.warning()) .doword('.') else r})
   .fdefine('constant', \(){
     . <- pop()
     .fdefine(pop_op(), \() push(.))
@@ -33,24 +50,26 @@
     .ok()
   })
   .fdefine('allot', \(){
-    . <- pop()
+    . <- pop()-1L
+    if(. <= 0) return(.warning("invalid allot size specified"))
     var <- names(froth.env$vars)[length(froth.env$vars)]
-    froth.env$vars[[var]] <- c(froth.env$vars[[var]], vector('list', .))
+    froth.env$vars[[var]] <- c(froth.env$vars[[var]], rep(list(0L), .))
     .ok()
   })
   .fdefine('extend', \(){
     . <- pop()
     var <- pop()
     if(!.isValidVar(var)) return(.warning("invalid variable specified!"))
-    froth.env$vars[[names(var)]] <- c(froth.env$vars[[names(var)]], vector('list', .))
+    froth.env$vars[[names(var)]] <- c(froth.env$vars[[names(var)]], rep(list(0L), .))
     .ok()
   })
-  .fdefine('realloc', \(){
+  .fdefine('reallot', \(){
     . <- pop()
     var <- pop()
     if(!.isValidVar(var)) return(.warning("invalid variable specified!"))
-    l <- vector('list', .)
-    for(i in seq_along(l)) l[[i]] <- froth.env$vars[[names(var)]][[i]]
+    l <- rep(list(0L), .)
+    lp <- length(froth.env$vars[[names(var)]])
+    for(i in seq_len(min(.,lp))) l[[i]] <- froth.env$vars[[names(var)]][[i]]
     froth.env$vars[[names(var)]] <- l
     .ok()
   })
@@ -73,6 +92,11 @@
       froth.env$vars[[names(v2)]][[i]] <- 0L
     .ok()
   })
+  .fdefine('create', \(){
+    l <- vector('list', 0L)
+    froth.env$vars[[pop_op()]] <- l
+    .ok()
+  })
   .fdefine(',', \(){
     lastarray <- names(froth.env$vars)[length(froth.env$vars)]
     froth.env$vars[[lastarray]][[length(froth.env$vars[[lastarray]])+1L]] <- pop()
@@ -81,7 +105,6 @@
 }
 
 .initVariableAliases <- function(){
-  .falias('create', 'variable')
 }
 
 .isValidVar <- function(var){

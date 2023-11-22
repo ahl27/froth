@@ -88,6 +88,159 @@ Constants avoid the hassle of dealing with addresses, and can be accessed slight
 
 ## Arrays
 
+Remember when I said we'd come back to that whole "`cell 0`" thing? By default, initializing a variable creates space for one "thing" at an address. Unlike Forth, `froth` creates this space at an abstracted memory location, and that space is big enough for any arbitrary R object. However, sometimes it's nice to have a variable that can store more than one value, like in the case of vectors or lists in R.
+
+Let's start by initializing an array. The definition proceeds like in normal variables, we just have to further specify that we want the variable to be larger than a single value:
+
+```
+fr> VARIABLE myarray 5 CELLS ALLOT
+ok.
+```
+This initializes a variable with 5 slots for things. Internally, this is the same as a length 5 list. The word `ALLOT` allots memory for the preceding variable, and we'll come back to `CELLS` in a moment.
+
+Previously, we saw this behavior:
+```
+fr> myarray .s
+[[1]]
+[1] "addr <myarray, cell 0>"
+
+[[2]]
+NULL
+
+ok.
+```
+
+`cell 0` means that this address is pointing to the first value of the array `myarray`. Cells are 0-indexed in `froth`, so this is the first entry in the array. Now as before, we can store a value at the first cell. I'm assuming the address is still on the stack, so remember we need to call `swap` to ensure the top value is the address.
+
+```
+fr> 1 swap !
+ok.
+fr> myarray ?
+1 ok.
+```
+
+Ok, now we can look at the word `CELLS`. Let's start by inspecting what we get by pushing `CELLS` to the stack:
+```
+fr> 4 CELLS .s clear
+[[1]]
+[1] "addr <, cell 4>"
+
+[[2]]
+NULL
+
+ok.
+```
+
+It's the fourth cell of...nothing? `CELLS` creates a unique kind of address--it stores cell number, but it doesn't point to any variable. Words like `ALLOT` expect one of these objects to tell it how much space to allocate. While `CELLS` calls don't point to anything, we can add them to variable addresses to get to other values in the array.
+
+```
+fr> myarray
+ok.
+fr> 4 CELLS + .s
+[[1]]
+[1] "addr <myarray, cell 4>"
+
+[[2]]
+NULL
+
+ok.
+```
+Notice how we've now gotten an address to `myarray` that's offset by 4 cells. Since the size of `myarray` is 5, this is the final entry in the array (indexing starts at 0, so the 5 entries are 0-4). This address works like the examples in the Variables section, so we can use `!`, `@`, `+!`, and `?` on it:
+
+```
+fr> VARIABLE myarray 5 CELLS ALLOT
+ok.
+fr> 0 BEGIN dup 5 < WHILE dup dup myarray swap CELLS + ! 1 + REPEAT drop
+ok.
+```
+Here we're putting it all together. See if you can guess what the contents of `myarray` now look like before reading the next section.
+
+We start by initializing an array `myarray` of size 5. Then, we put `0` on the stack and `begin` a loop. At each iteration of the loop we:
+1. Dup the top of the stack and check if less than 5; if not, go to (8)
+2. Dup the top of the stack twice.
+3. Load the address of `myarray`, swap it with the top duplicate
+4. Create a cell offset equal to the top duplicate, add to the address of `myarray`
+5. Store the second duplicate (from 2) at the offset location
+6. Add 1 to the value on the stack
+7. loop
+8. finish loop
+
+So what happens? When the stack is 0, we store 0 at the 0th position of `myarray`, then 1 at the 1st position, 2 at the second, etc. Let's print out the entire array:
+```
+fr> 5 0 do myarray i cells + ? loop
+0 1 2 3 4 ok.
+```
+
+It's also possible to initialize an array to a specific value using the `CREATE` and `,` words. *Pay very close attention to this syntax!*
+```
+fr> CREATE myarray 0 , 1 , 2 , 3 , 4 ,
+ok.
+fr> 5 0 do myarray i cells + ? loop
+0 1 2 3 4 ok.
+```
+
+Did you notice how we used `,`? Unlike English, `,` is a `froth` word, meaning that it needs to be space separated and it acts upon the stack. This means that we **must** include a command after the last element to ensure it's added to the array.
+
+## Modifying Arrays
+
+It's often useful to be able to quickly change the values or the size of allocated arrays.
+
+To change the values in an array, we can use the `FILL` word. `FILL` expects three items on the stack: a variable address, a `CELLS` offset `n`, and a value `x`. It then fills the first `n` cells with `x`.
+
+```
+fr> variable filltest 3 cells allot
+ok.
+fr> 3 0 do i filltest i cells + ! loop
+ok.
+fr> 3 0 do filltest i cells + ? loop
+0 1 2 ok.
+fr> filltest 3 cells 10 fill
+ok.
+fr> 3 0 do filltest i cells + ? loop
+10 10 10 ok.
+```
+There's also the shortcut word `ERASE`, which is equivalent to `0 FILL`.
+```
+fr> filltest 3 cells erase
+ok.
+fr> 3 0 do filltest i cells + ? loop
+0 0 0 ok.
+```
+
+That changes values, but what if we end up with the wrong size array altogether? For that, we have two options: `EXTEND` and `REALLOT`. Both of these words have the same form; they expect the stack to be comprised of a variable address `v` and a value `n`. `EXTEND` will make the array at `v` larger by `n` cells, and `REALLOT` will change `v` to have exactly `n` cells (copying the contents of the first `n` cells, if any).
+
+```
+fr> variable myarray 3 cells allot
+ok.
+fr> myarray 5 cells + ?
+Error: array accessed out of bounds!
+fr> myarray 2 cells extend
+ok.
+fr> myarray 5 cells + ?
+0 ok.
+fr> 10 myarray 1 cells + !
+ok.
+fr> myarray 3 cells reallot
+ok.
+fr> myarray 5 cells + ?
+Error: array accessed out of bounds!
+fr> myarray 1 cells + ?
+10 ok.
+```
+
+If you're ever unsure about how large your array is, use the `LENGTH` word to copy the length of an address to the stack, and `LENGTH?` to print it out.
+
+```
+fr> variable myarray 10 cells allot
+ok.
+fr> myarray LENGTH .
+10 ok.
+fr> myarray 20 cells reallot
+ok.
+fr> myarray LENGTH?
+20 ok.
+```
+
 ## Words in this chapter
 - `VARIABLE xxx`: creates a variable named `xxx`
 - `! ( n addr -- )`: stores the value `n` at address `addr`
@@ -96,7 +249,12 @@ Constants avoid the hassle of dealing with addresses, and can be accessed slight
 - `+! ( n addr -- )`: adds the value `n` to the value at `addr`
 - `CONSTANT xxx (n -- )`: creates a constant called `xxx` that stores `n`; `xxx` returns `n` when called
 - `ALLOT ( addr ncells -- )`: allocates `ncells` cells at `addr`
+- `CREATE xxx y1 , y2 , ... yn ,`: creates an array `xxx` with values `y1, y2, ... yn`
 - `CELLS ( n -- )`: creates a memory address offset for arrays
-- `FILL ( addr n val -- )`: fills `n` cells of memory beginning at `addr` with `val`
-- `ERASE ( addr n -- )`: fills `n` cells of memory beginning at `addr` with 0
+- `FILL ( addr ncells val -- )`: fills `ncells` cells of memory beginning at `addr` with `val`
+- `ERASE ( addr ncells -- )`: fills `ncells` cells of memory beginning at `addr` with 0
+- `REALLOT ( addr ncells -- )`: reallots array at `addr` to have size `ncells`.
+- `EXTEND ( addr ncells -- )`: extends the array at `addr` by `ncells` cells
+- `LENGTH ( addr -- len )`: pushes the length of the array at `addr` onto the stack
+- `LENGTH? ( addr -- )`: prints the length of the array at `addr`
 
