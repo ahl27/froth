@@ -1,8 +1,8 @@
 ---
-title: "variables"
+title: "Variables, Constants, and Arrays"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{variables}
+  %\VignetteIndexEntry{Variables, Constants, and Arrays}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -11,8 +11,6 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE)
 library(froth, quietly = TRUE)
 ```
-
-# Variables, Constants, and Arrays
 
 Forth-like languages are nice because they don't require a lot of variables. However, sometimes there's a problem that requires saving a particular value for later usage that can't be on the stack. This is where variables, constants, and arrays come in.
 

@@ -1,8 +1,8 @@
 ---
-title: "loops"
+title: "Loops"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{loops}
+  %\VignetteIndexEntry{Loops}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -11,8 +11,6 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE)
 library(froth, quietly = TRUE)
 ```
-
-# Loops
 
 Computers are excellent are performing the same task over and over and over again. In order to ensure that it's just the computer doing repetitive tasks (and not also the coder typing them out), most languages employ a type of operation called a loop. Loops come in two main flavors: definite and indefinite.
 

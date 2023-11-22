@@ -1,8 +1,8 @@
 ---
-title: "arithmeticstacks"
+title: "Arithmetic and Stacks"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{arithmeticstacks}
+  %\VignetteIndexEntry{Arithmetic and Stacks}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -11,7 +11,6 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE)
 library(froth, quietly = TRUE)
 ```
-# Arithmetic and Stack Operators
 
 ## More Arithmetic
 

@@ -1,8 +1,8 @@
 ---
-title: "conditionals"
+title: "Conditionals and Branching"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{conditionals}
+  %\VignetteIndexEntry{Conditionals and Branching}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -11,8 +11,6 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE)
 library(froth, quietly = TRUE)
 ```
-
-# Conditionals and Branching
 
 A major component of computers is being able to make decisions. If you've worked with other programming languages, you'll be familiar with common terms like `if` and `else`.
 

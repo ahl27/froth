@@ -1,8 +1,8 @@
 ---
-title: "fundamentalfroth"
+title: "Fundamental Froth"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{fundamentalfroth}
+  %\VignetteIndexEntry{Fundamental Froth}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -11,7 +11,6 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE)
 library(froth, quietly = TRUE)
 ```
-# Fundamental `froth`
 
 `froth` attempts to stick close to the original conventions of Froth. Let's walk through the basics using the built-in commandline.
 
