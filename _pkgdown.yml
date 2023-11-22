@@ -5,8 +5,6 @@ template:
 
 home:
   title: "froth: Forth for R"
-  home:
-  title: "Comparative Genomics with SynExtend and DECIPHER"
   type: inverse
 
 
