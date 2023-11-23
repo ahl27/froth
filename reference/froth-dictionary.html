@@ -94,7 +94,7 @@
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>None</p>
+<p>None. <code>froth.dictionary</code> lists all installed words using <code><a href="https://rdrr.io/r/base/message.html" class="external-link">message</a></code>, and <code>writeFrothDictionary</code> either prints to the console or to a file.</p>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
@@ -111,19 +111,19 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## Show all words</span></span></span>
 <span class="r-in"><span><span class="fu">froth.dictionary</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Built-in Words:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> exit inspect words apply multiapply : lit (</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> noop abort" reset clear swap 2swap dup 2dup</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> dig over 2over 2drop rot drop ?dup &gt;r</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> r&gt; r@ . .R emit ." spaces space</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> cr u.r + sum - * div idiv</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ^ mod /mod 1+ 1- 2+ 2- 2*</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2/ negate abs min max sqrt */ */mod</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> invert or and xor 0= 0&lt; 0&gt; &lt;</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &lt;= &gt; &gt;= = &lt;&gt; if else do</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> begin loop +loop while leave until repeat i</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> j k loopcounter loopend variable ! @ length</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> length? +! ? constant cells allot extend reallot</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> fill erase create , r_rnorm</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> exit inspect words apply multiapply : forget lit</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ( noop abort" reset clear swap 2swap dup</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2dup dig over 2over 2drop rot drop ?dup</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;r r&gt; r@ . .R emit ." spaces</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> space cr u.r + sum - * div</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> idiv ^ mod /mod 1+ 1- 2+ 2-</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2* 2/ negate abs min max sqrt */</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> */mod invert or and xor 0= 0&lt; 0&gt;</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &lt; &lt;= &gt; &gt;= = &lt;&gt; if else</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> do begin loop +loop while leave until repeat</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> i j k loopcounter loopend variable ! @</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> length length? +! ? constant cells allot extend</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> reallot fill erase create , r_rnorm</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Aliases:</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> quit (exit) compile (:) ) (noop) .s (inspect)</span>

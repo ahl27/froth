@@ -197,6 +197,31 @@ these before when we input <code>45</code>–this put the number 45 onto
 the stack. If <code>froth</code> can’t find a word in the dictionary, it
 checks to see if you’ve input a number. If so, it executes a special
 command that puts it onto the stack.</p>
+<p>You can redefine a word at any time by just writing a new definition
+for it. <code>froth</code> will always use the most recent definition
+for a word that you’ve given it, but it remembers old ones. If you
+wanted to go back to a previous definition, you can use the
+<code>FORGET</code> word.</p>
+<pre><code>fr&gt; : add_two 2 + ; 
+ok.
+fr&gt; : add_two 2 2 + + ;
+ok.
+fr&gt; 5 add_two .
+9 ok.
+fr&gt; forget add_two
+ok.
+fr&gt; 5 add_two
+7 ok.
+fr&gt; forget add_two
+ok.
+fr&gt; 5 add_two
+add_two ?</code></pre>
+<p>Here we define <code>add_two</code> twice–the first defines it as
+adding two to a number, and the second as adding four. When we call
+<code>forget add_two</code>, it reverts to the first definition. Calling
+it a second time removes the definition entirely.</p>
+<p>If you’re curious what words are defined, you can list them all out
+using the <code>WORDS</code> words.</p>
 </div>
 <div class="section level2">
 <h2 id="the-data-stack">The Data Stack<a class="anchor" aria-label="anchor" href="#the-data-stack"></a>
