@@ -110,6 +110,27 @@ Note the space separation between `."` and the string. The ending `"` is part of
 
 `froth` also has some special words. We encountered one of these before when we input `45`--this put the number 45 onto the stack. If `froth` can't find a word in the dictionary, it checks to see if you've input a number. If so, it executes a special command that puts it onto the stack.
 
+You can redefine a word at any time by just writing a new definition for it. `froth` will always use the most recent definition for a word that you've given it, but it remembers old ones. If you wanted to go back to a previous definition, you can use the `FORGET` word.
+```
+fr> : add_two 2 + ; 
+ok.
+fr> : add_two 2 2 + + ;
+ok.
+fr> 5 add_two .
+9 ok.
+fr> forget add_two
+ok.
+fr> 5 add_two
+7 ok.
+fr> forget add_two
+ok.
+fr> 5 add_two
+add_two ?
+```
+Here we define `add_two` twice--the first defines it as adding two to a number, and the second as adding four. When we call `forget add_two`, it reverts to the first definition. Calling it a second time removes the definition entirely.
+
+If you're curious what words are defined, you can list them all out using the `WORDS` words.
+
 ## The Data Stack
 
 We've been talking a lot about the stack, but...what is it? If you're unfamiliar with the stack data structure, the concept is essentially the same as a tower of bricks. Each time we "add" to the stack, we place a brick on top of the tower. Each time we remove from the stack, we have to take the brick off the top, otherwise the entire stack would fall apart! This means that the most recently added brick is always the first one we remove. This concept is typically referred to as "Last In, First Out" (LIFO). 

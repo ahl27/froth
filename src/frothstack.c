@@ -1,6 +1,15 @@
 #include "froth.h"
 
 
+/*
+Thoughts:
+- FORGET: in `:`, just check if the word is defined.
+  If it is, store the current definition in a list (prevDefns).
+  When FORGET is called, if it has a prevDefns attribute then
+  replace the definition with the previous. Else, just drop the entry
+- `'`: some way to just put the operation on the stack 
+*/
+
 /*** Called from R ***/
 inline SEXP initFrothStack(void){
   return CONS(R_NilValue, R_NilValue);

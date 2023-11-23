@@ -7,7 +7,27 @@
 }
 
 .userdefine <- function(tag, value){
-  froth.env$Dict[[tag]] <- structure(value, id=tag, class="FrothUserEntry")
+  l <- NULL
+  if(tag %in% names(froth.env$Dict)){
+    l <- c(list(froth.env$Dict[[tag]][[1L]], class(froth.env$Dict[[tag]])), attr(froth.env$Dict[[tag]], 'prev.defns'))
+  }
+  froth.env$Dict[[tag]] <- structure(value, id=tag, class="FrothUserEntry", prev.defns=l)
+}
+
+.forget <- function(){
+  . <- pop_op()
+  if(!(. %in% names(froth.env$Dict))) return(.ok())
+  if(class(froth.env$Dict[[.]]) != 'FrothUserEntry')
+    return(.warning("forgetting a built-in function!"))
+  pv <- attr(froth.env$Dict[[.]], 'prev.defns')
+  if(is.null(pv)) froth.env$Dict[[.]] <- NULL
+  else {
+    froth.env$Dict[[.]][[1L]] <- pv[[1L]]
+    class(froth.env$Dict[[.]]) <- pv[[2L]]
+    if(length(pv) == 2) pv <- NULL else pv <- pv[-c(1L,2L)]
+    attr(froth.env$Dict[[.]], 'prev.defns') <- pv
+  }
+  return(.ok())
 }
 
 .doword <- function(word, ...){
@@ -24,8 +44,8 @@
     if(word %in% names(froth.env$vars)){
       push(structure(0L, names=word, class='FrothVariableAddress'))
       return(.ok())
-    } else if (word %in% names(.GlobalEnv)){
-      push(.GlobalEnv[[word]])
+    } else if (exists(word, where=1L)){
+      push(get(word, pos=1L))
       return(.ok())
     }
     message(word, ' ?')

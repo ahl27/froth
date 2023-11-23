@@ -1,5 +1,5 @@
 Package: froth
-Title: FORTH for R
+Title: Emulate a Forth Programming Environment
 Version: 1.0.0
 Authors@R: 
     person(given="Aidan", family="Lakshman", email="ahl27@pitt.edu", 

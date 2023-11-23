@@ -5,6 +5,7 @@
   .fdefine('apply', .apply)
   .fdefine('multiapply', .multiapply)
   .fdefine(':', .compile)
+  .fdefine('forget', .forget)
   .fdefine('lit', \() {. <- pop_op(); push(.)})
   .fdefine('(', \() {. <- ''; while(. != ')' && !is.null(.)) . <- pop_op(); .ok()})
   .fdefine('noop', .ok)

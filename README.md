@@ -2,7 +2,7 @@
 
 <img src="./man/figures/froth.png" width="400" class="center"/>
 
-froth is a FORTH implementation for R.
+froth is a FORTH implementation for R. If you're new to `froth` or Forth, check out [the detailed overview](https://www.ahl27.com/froth/articles/froth.html) or my [in-depth tutorial](https://www.ahl27.com/froth/articles/FundamentalFroth.html).
 
 This implementation comes with a number of differences from other FORTHs:
 - uses R operators for arithmetic, so `3 2 /` returns `1.5`
@@ -16,6 +16,5 @@ This will (likely) not be a 1:1 copy of Gforth, I think I'd rather have a forth 
 and works in R than one that exacly imitates existing Gforth. But...tbd.
 
 ## TODOs
-- `FORGET` word (definitions currently overwrite previous ones)
 - `'` word
 - any kind of I/O functionality (though you can read files into `froth` from R)

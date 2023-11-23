@@ -19,7 +19,7 @@ froth.source(filepath)
 These functions run the froth interpreter on strings read in either as arguments (\code{froth.parse}) or from a file (\code{froth.source}). Both functions will run froth code without having to enter the REPL.
 }
 \value{
-Invisibly returns a status code, with 0 corresponding to normal execution.
+Invisibly returns an integer status code, with 0 corresponding to normal execution.
 }
 
 \author{

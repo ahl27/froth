@@ -12,7 +12,7 @@ froth.reset()
 }
 
 \value{
-None
+None; called to reset internal froth stacks.
 }
 \author{
 Aidan Lakshman \email{ahl27@pitt.edu}

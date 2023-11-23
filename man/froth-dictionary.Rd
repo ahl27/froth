@@ -21,7 +21,7 @@ writeFrothDictionary(file="", ...)
 \code{writeFrothDictionary} allows users to export their function definitions. The default argument will print out user-defined definitions to the console. This output can be redirected to a file by changing the \code{file} argument.
 }
 \value{
-None
+None. \code{froth.dictionary} lists all installed words using \code{\link{message}}, and \code{writeFrothDictionary} either prints to the console or to a file.
 }
 \author{
 Aidan Lakshman \email{ahl27@pitt.edu}

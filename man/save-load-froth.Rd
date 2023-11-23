@@ -22,7 +22,7 @@ loadFrothSession(file=NULL)
 \code{loadFrothSession} will restart the froth environment, which will erase any current user-defined methods and variables. It then loads the contents of the the file specified into the current Froth session.
 }
 \value{
-None
+None. \code{loadFrothSession} will update internal froth stacks, and \code{saveFrothSession} will save to a file.
 }
 \author{
 Aidan Lakshman \email{ahl27@pitt.edu}
