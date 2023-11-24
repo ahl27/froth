@@ -96,6 +96,7 @@ So what is happening here? It's a function that expects a number on the stack an
 **Note:** Every `if` needs exactly one `then`!
 
 There are many comparators available, not just `=` and `<`:
+
 - `=`: are the top two elements equal?
 - `<`: is the top element greater than the first?
 - `>`: is the top element less than the first?
@@ -119,6 +120,7 @@ Just like in other programming languages, `froth` supports a number of logical o
 Some words come with built-in checks. For example, `?DUP` duplicates the top value only if it is not zero. For error-handling, you can use `ABORT"`. `ABORT"` checks the stack for a value; if it is `TRUE`, it clears the stacks and prints an error message.
 
 ## Words in this chapter
+
 - `if`: if top of stack is `TRUE`, executes. Else jumps to the next `else` or `then` block.
 - `else`: executes commands until `then` only if the preceding `if` did not execute.
 - `then`: terminates an `if` or `if...else` block.

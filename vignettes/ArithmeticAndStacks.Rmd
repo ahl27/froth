@@ -100,6 +100,7 @@ fr> 2 7 9 3 quadratic .
 ## Other Miscellaneous operators
 
 For completeness, here are some other arithmetic operations:
+
 - `1+ ( n1 -- n2 )`: adds 1
 - `1- ( n1 -- n2 )`: subtracts 1
 - `2+ ( n1 -- n2 )`: adds 2
@@ -108,8 +109,11 @@ For completeness, here are some other arithmetic operations:
 - `2/ ( n1 -- n2 )`: divides by 2
 
 We also have some funky double operators:
+
 - `*/ ( a b c -- n )`: pushes `(a*b) / c`
 - `*/mod ( a b c -- rem quot )`: pushes the remainder and quotient of `(a*b) %/% c`
+
+If you're coming from Forth, you may recognize these are operations using double-length values as intermediates for increased precision. However, since `froth` uses R internals for operations, there's no difference between single and double length values.
 
 ## Words in this chapter
 

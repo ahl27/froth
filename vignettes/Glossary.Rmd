@@ -20,6 +20,7 @@ You can list all the installed words in `froth` with the `WORDS` word, or use `f
 - `cr ( -- )`: prints a new line
 - `." xxx" ( -- )`: prints `xxx` on the terminal. Note that `"` terminates the string.
 - `: xxx yyy ; ( -- )` : defines a word `xxx` comprised of words `yyy`
+- `FORGET xxx ( -- )`: removes the current word `xxx`. If `xxx` had a previous definition it reverts to that previous value, and otherwise the word is removed.
 - `+ (a b -- n)`: adds `a+b`
 - `* (a b -- n)`: multiplies `a*b`
 - `. (n -- )`: pops the top element of stack and prints it

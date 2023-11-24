@@ -162,6 +162,7 @@ fr> 0 begin 1 + dup dup . 10 > if leave then again
 Normally the `BEGIN...AGAIN` loop would go on forever. However, in the middle we're doing `10 > if leave then`. This compares the current value on the stack to 10, and if it's greater than 10, we run `leave`. As soon as the value on the stack reaches 11, we execute `leave` and the loop finishes.
 
 ## Words in this chapter
+
 - `DO ( end start -- )`: starts a definite loop from `start` to `end`
 - `LOOP ( -- )`: increments the loop counter by 1
 - `+LOOP ( n -- )`: increments the loop counter by n

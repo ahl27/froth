@@ -155,6 +155,7 @@ ok.
 Here we're putting it all together. See if you can guess what the contents of `myarray` now look like before reading the next section.
 
 We start by initializing an array `myarray` of size 5. Then, we put `0` on the stack and `begin` a loop. At each iteration of the loop we:
+
 1. Dup the top of the stack and check if less than 5; if not, go to (8)
 2. Dup the top of the stack twice.
 3. Load the address of `myarray`, swap it with the top duplicate
@@ -241,6 +242,7 @@ fr> myarray LENGTH?
 ```
 
 ## Words in this chapter
+
 - `VARIABLE xxx`: creates a variable named `xxx`
 - `! ( n addr -- )`: stores the value `n` at address `addr`
 - `@ ( addr -- n )`: copies the value at `addr` to the stack
