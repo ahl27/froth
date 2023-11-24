@@ -259,3 +259,32 @@ If you find yourself in a real pickle, the `RESET` word will completely reset th
 - `. (n -- )`: pops the top element of stack and prints it
 - `clear ( x1 x2 ... -- )`: removes all elements of the stack
 - `reset ( -- )`: reset `froth` to defaults (wipe all user definitions, reinitialize all built-in definitions, reset all stacks)
+
+<div class="center">
+  <ul class="pagination pagination-lg">
+    <li class="page-item active">
+      <a class="page-link" href="https://www.ahl27.com/froth/articles/FundamentalFroth.html">1</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="https://www.ahl27.com/froth/articles/ArithmeticAndStacks.html">2</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="https://www.ahl27.com/froth/articles/Conditionals.html">3</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="https://www.ahl27.com/froth/articles/Loops.html">4</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="https://www.ahl27.com/froth/articles/Variables.html">5</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="https://www.ahl27.com/froth/articles/RInterface.html">6</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="https://www.ahl27.com/froth/articles/Glossary.html">7</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="https://www.ahl27.com/froth/articles/ArithmeticAndStacks.html">&raquo;</a>
+    </li>
+  </ul>
+</div>

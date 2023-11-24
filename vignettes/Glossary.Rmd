@@ -102,3 +102,32 @@ You can list all the installed words in `froth` with the `WORDS` word, or use `f
 - `EXTEND ( addr ncells -- )`: extends the array at `addr` by `ncells` cells
 - `LENGTH ( addr -- len )`: pushes the length of the array at `addr` onto the stack
 - `LENGTH? ( addr -- )`: prints the length of the array at `addr`
+
+<div class="center">
+  <ul class="pagination pagination-lg">
+    <li class="page-item">
+      <a class="page-link" href="https://www.ahl27.com/froth/articles/RInterface.html">&laquo;</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="https://www.ahl27.com/froth/articles/FundamentalFroth.html">1</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="https://www.ahl27.com/froth/articles/ArithmeticAndStacks.html">2</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="https://www.ahl27.com/froth/articles/Conditionals.html">3</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="https://www.ahl27.com/froth/articles/Loops.html">4</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="https://www.ahl27.com/froth/articles/Variables.html">5</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="https://www.ahl27.com/froth/articles/RInterface.html">6</a>
+    </li>
+    <li class="page-item active">
+      <a class="page-link" href="https://www.ahl27.com/froth/articles/Glossary.html">7</a>
+    </li>
+  </ul>
+</div>
