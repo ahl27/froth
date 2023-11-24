@@ -1,8 +1,8 @@
 ---
-title: "glossary"
+title: "Glossary"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{glossary}
+  %\VignetteIndexEntry{Glossary}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -12,7 +12,6 @@ knitr::opts_chunk$set(echo = TRUE)
 library(froth, quietly = TRUE)
 ```
 
-# Glossary of Words
 You can list all the installed words in `froth` with the `WORDS` word, or use `froth.dictionary()` from R. The following is all the words referenced in the previous chapters.
 
 - `<NUMBER> ( -- n )` : pushes a number onto the stack
