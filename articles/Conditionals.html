@@ -197,14 +197,26 @@ than 20 and <code>FALSE</code> otherwise</li>
 <p><strong>Note:</strong> Every <code>if</code> needs exactly one
 <code>then</code>!</p>
 <p>There are many comparators available, not just <code>=</code> and
-<code>&lt;</code>: - <code>=</code>: are the top two elements equal? -
-<code>&lt;</code>: is the top element greater than the first? -
-<code>&gt;</code>: is the top element less than the first? -
-<code>&lt;&gt;</code>: are the top two elements not equal? -
-<code>0=</code>: is the top element zero? - <code>0&lt;</code>: is the
-top element greater than zero? - <code>0&gt;</code>: is the top element
-less than zero? - <code>&lt;=</code>, <code>&gt;=</code> are defined as
-one would expect</p>
+<code>&lt;</code>:</p>
+<ul>
+<li>
+<code>=</code>: are the top two elements equal?</li>
+<li>
+<code>&lt;</code>: is the top element greater than the first?</li>
+<li>
+<code>&gt;</code>: is the top element less than the first?</li>
+<li>
+<code>&lt;&gt;</code>: are the top two elements not equal?</li>
+<li>
+<code>0=</code>: is the top element zero?</li>
+<li>
+<code>0&lt;</code>: is the top element greater than zero?</li>
+<li>
+<code>0&gt;</code>: is the top element less than zero?</li>
+<li>
+<code>&lt;=</code>, <code>&gt;=</code> are defined as one would
+expect</li>
+</ul>
 <p><code>if</code> uses R’s <code>as.logical</code> to check if the top
 value evaluates to <code>TRUE</code>. This means that nonzero numbers
 will be treated as <code>TRUE</code>, whereas <code>0</code> will

@@ -85,8 +85,17 @@
 <div class="page-header"><h1 id="froth-forth-for-r">froth: FORTH for R<a class="anchor" aria-label="anchor" href="#froth-forth-for-r"></a>
 </h1></div>
 <p><img src="./reference/figures/froth.png" width="400" class="center"></p>
-<p>froth is a FORTH implementation for R. If you’re new to <code>froth</code> or Forth, check out <a href="https://www.ahl27.com/froth/articles/froth.html" class="external-link">the detailed overview</a> or my <a href="https://www.ahl27.com/froth/articles/FundamentalFroth.html" class="external-link">in-depth tutorial</a>.</p>
-<p>This implementation comes with a number of differences from other FORTHs: - uses R operators for arithmetic, so <code>3 2 /</code> returns <code>1.5</code> - arbitrary R objects can be pushed onto the stack - built-in R <code>print</code> methods; use <code>.R</code> to format according to the print method for the top of the parameter stack - obfuscated memory (no direct or emulated hardware-level memory access) - no distinction between compiled and interpreted words (loops are possible outside of definitions!) - Use of R lists for internal arrays; arrays of bytes are not supported</p>
+<p>froth is a Forth implementation for R. If you’re new to <code>froth</code> or Forth, check out <a href="https://www.ahl27.com/froth/articles/froth.html" class="external-link">the detailed overview</a> or my <a href="https://www.ahl27.com/froth/articles/FundamentalFroth.html" class="external-link">in-depth tutorial</a>.</p>
+<p>This implementation comes with a number of differences from other FORTHs:</p>
+<ul>
+<li>uses R operators for arithmetic, so <code>3 2 /</code> returns <code>1.5</code>
+</li>
+<li>arbitrary R objects can be pushed onto the stack</li>
+<li>built-in R <code>print</code> methods; use <code>.R</code> to format according to the print method for the top of the parameter stack</li>
+<li>obfuscated memory (no direct or emulated hardware-level memory access)</li>
+<li>no distinction between compiled and interpreted words (loops are possible outside of definitions!)</li>
+<li>Use of R lists for internal arrays; arrays of bytes are not supported</li>
+</ul>
 <p>This will (likely) not be a 1:1 copy of Gforth, I think I’d rather have a forth implementation that is robust and works in R than one that exacly imitates existing Gforth. But…tbd.</p>
 <div class="section level2">
 <h2 id="todos">TODOs<a class="anchor" aria-label="anchor" href="#todos"></a>

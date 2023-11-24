@@ -262,16 +262,35 @@ fr&gt; 2 7 9 3 quadratic .
 <div class="section level2">
 <h2 id="other-miscellaneous-operators">Other Miscellaneous operators<a class="anchor" aria-label="anchor" href="#other-miscellaneous-operators"></a>
 </h2>
-<p>For completeness, here are some other arithmetic operations: -
-<code>1+ ( n1 -- n2 )</code>: adds 1 - <code>1- ( n1 -- n2 )</code>:
-subtracts 1 - <code>2+ ( n1 -- n2 )</code>: adds 2 -
-<code>2- ( n1 -- n2 )</code>: subtracts 2 -
-<code>2* ( n1 -- n2 )</code>: multiplies by 2 -
-<code>2/ ( n1 -- n2 )</code>: divides by 2</p>
-<p>We also have some funky double operators: -
-<code>*/ ( a b c -- n )</code>: pushes <code>(a*b) / c</code> -
+<p>For completeness, here are some other arithmetic operations:</p>
+<ul>
+<li>
+<code>1+ ( n1 -- n2 )</code>: adds 1</li>
+<li>
+<code>1- ( n1 -- n2 )</code>: subtracts 1</li>
+<li>
+<code>2+ ( n1 -- n2 )</code>: adds 2</li>
+<li>
+<code>2- ( n1 -- n2 )</code>: subtracts 2</li>
+<li>
+<code>2* ( n1 -- n2 )</code>: multiplies by 2</li>
+<li>
+<code>2/ ( n1 -- n2 )</code>: divides by 2</li>
+</ul>
+<p>We also have some funky double operators:</p>
+<ul>
+<li>
+<code>*/ ( a b c -- n )</code>: pushes <code>(a*b) / c</code>
+</li>
+<li>
 <code>*/mod ( a b c -- rem quot )</code>: pushes the remainder and
-quotient of <code>(a*b) %/% c</code></p>
+quotient of <code>(a*b) %/% c</code>
+</li>
+</ul>
+<p>If you’re coming from Forth, you may recognize these are operations
+using double-length values as intermediates for increased precision.
+However, since <code>froth</code> uses R internals for operations,
+there’s no difference between single and double length values.</p>
 </div>
 <div class="section level2">
 <h2 id="words-in-this-chapter">Words in this chapter<a class="anchor" aria-label="anchor" href="#words-in-this-chapter"></a>

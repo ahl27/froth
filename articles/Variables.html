@@ -248,13 +248,21 @@ contents of <code>myarray</code> now look like before reading the next
 section.</p>
 <p>We start by initializing an array <code>myarray</code> of size 5.
 Then, we put <code>0</code> on the stack and <code>begin</code> a loop.
-At each iteration of the loop we: 1. Dup the top of the stack and check
-if less than 5; if not, go to (8) 2. Dup the top of the stack twice. 3.
-Load the address of <code>myarray</code>, swap it with the top duplicate
-4. Create a cell offset equal to the top duplicate, add to the address
-of <code>myarray</code> 5. Store the second duplicate (from 2) at the
-offset location 6. Add 1 to the value on the stack 7. loop 8. finish
-loop</p>
+At each iteration of the loop we:</p>
+<ol style="list-style-type: decimal">
+<li>Dup the top of the stack and check if less than 5; if not, go to
+(8)</li>
+<li>Dup the top of the stack twice.</li>
+<li>Load the address of <code>myarray</code>, swap it with the top
+duplicate</li>
+<li>Create a cell offset equal to the top duplicate, add to the address
+of <code>myarray</code>
+</li>
+<li>Store the second duplicate (from 2) at the offset location</li>
+<li>Add 1 to the value on the stack</li>
+<li>loop</li>
+<li>finish loop</li>
+</ol>
 <p>So what happens? When the stack is 0, we store 0 at the 0th position
 of <code>myarray</code>, then 1 at the 1st position, 2 at the second,
 etc. Let’s print out the entire array:</p>

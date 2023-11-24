@@ -118,6 +118,10 @@ terminal. Note that <code>"</code> terminates the string.</li>
 comprised of words <code>yyy</code>
 </li>
 <li>
+<code>FORGET xxx ( -- )</code>: removes the current word
+<code>xxx</code>. If <code>xxx</code> had a previous definition it
+reverts to that previous value, and otherwise the word is removed.</li>
+<li>
 <code>+ (a b -- n)</code>: adds <code>a+b</code>
 </li>
 <li>

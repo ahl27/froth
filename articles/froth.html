@@ -125,24 +125,30 @@ for additional features, feel free to let me know on GitHub!</p>
 </h3>
 <p>This section is intended for people that experienced in Forth, so if
 you’re just here to learn how to use <code>froth</code>, feel free to
-skip ahead.</p>
+skip ahead to <a href="https://www.ahl27.com/froth/articles/FundamentalFroth" class="external-link">the
+tutorial</a>.</p>
 <p>I am not an expert on Forth, especially given that there are people
 that have been programming in Forth longer than I have been alive. There
 may be some mistakes I’ve made in this implementation that are
 unintentional–if you find a difference from Forth that I haven’t
 mentioned, feel free to leave me a comment on GitHub.</p>
 <p>However, there are a few known differences that I implemented
-intentionally: - Sizes are abstracted. All numbers use R’s internals, so
-integers implicitly convert to reals during division and won’t
-over-/underflow. Arrays use R’s <code>list</code> structure, so each
-cell can hold arbitrary amounts of stuff. This also means byte arrays
-are not supported. - Everything is interpreted. Loops can be executed
-outside of a definition. - Virtual memory. Users don’t get access to
-system-level memory, mostly because R doesn’t allow that either. -
-Arbitrary R objects can be pushed onto the stack - I haven’t yet
-implemented <code>FORGET</code>, <code>'</code>, or I/O from
-<code>froth</code>. Words/variables can be redefined any time, but
-they’ll destructively overwrite the previous definition.</p>
+intentionally:</p>
+<ul>
+<li>Sizes are abstracted. All numbers use R’s internals, so integers
+implicitly convert to reals during division and won’t over-/underflow.
+Arrays use R’s <code>list</code> structure, so each cell can hold
+arbitrary amounts of stuff. This also means byte arrays are not
+supported.</li>
+<li>Everything is interpreted. Loops can be executed outside of a
+definition.</li>
+<li>Virtual memory. Users don’t get access to system-level memory,
+mostly because R doesn’t allow that either.</li>
+<li>Arbitrary R objects can be pushed onto the stack</li>
+<li>I haven’t yet implemented <code>FORGET</code>, <code>'</code>, or
+I/O from <code>froth</code>. Words/variables can be redefined any time,
+but they’ll destructively overwrite the previous definition.</li>
+</ul>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
