@@ -17,7 +17,7 @@
 .forget <- function(){
   . <- pop_op()
   if(!(. %in% names(froth.env$Dict))) return(.ok())
-  if(class(froth.env$Dict[[.]]) != 'FrothUserEntry')
+  if(!is(froth.env$Dict[[.]], 'FrothUserEntry'))
     return(.warning("forgetting a built-in function!"))
   pv <- attr(froth.env$Dict[[.]], 'prev.defns')
   if(is.null(pv)) froth.env$Dict[[.]] <- NULL
