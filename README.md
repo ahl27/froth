@@ -2,7 +2,12 @@
 
 <img src="./man/figures/froth.png" width="400" class="center"/>
 
-froth is a Forth implementation for R. If you're new to `froth` or Forth, check out [the detailed overview](https://www.ahl27.com/froth/articles/froth.html) or my [in-depth tutorial](https://www.ahl27.com/froth/articles/FundamentalFroth.html).
+`froth` is a Forth implementation for R. If you're new to `froth` or Forth, check out [the detailed overview](https://www.ahl27.com/froth/articles/froth.html) or my [in-depth tutorial](https://www.ahl27.com/froth/articles/FundamentalFroth.html).
+
+`froth` is distributed by CRAN. You can download it for your R installation by running:
+```
+install.packages("froth")
+```
 
 This implementation comes with a number of differences from other FORTHs:
 
