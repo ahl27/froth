@@ -21,3 +21,5 @@ export(writeFrothDictionary)
 
 S3method(show, "FrothVariableAddress")
 S3method(print, "FrothVariableAddress")
+S3method(show, "FrothExecutionToken")
+S3method(print, "FrothExecutionToken")

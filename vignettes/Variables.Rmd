@@ -241,6 +241,82 @@ fr> myarray LENGTH?
 20 ok.
 ```
 
+## Execution Tokens
+
+Variables storing values is nice, but sometimes it's useful to be able to store a function inside a variable. This is a common practice in R (e.g., any of the `*apply` functions), and also exists in C in the form of function pointers.
+
+Forth also incorporates a way to do this, using a unique word to put an "execution token" on the stack. An execution token is essentially just the location of a particular type of code. When you want to execute that token, Forth runs the code at the location referenced by the execution token.
+
+This capability is implemented in `froth`, but it does have a few differences to classic Forths due to how the memory is abstracted. Let's start with a simple example:
+
+```
+fr> : GREET ." Hello!" ;
+ok.
+fr> GREET
+Hello! ok.
+fr> ' GREET .
+executable token < greet > ok.
+fr> ' GREET EXECUTE
+Hello! ok.
+```
+
+We have two new words here: `'` and `EXECUTE`. The first of these, `'` (pronounced "tick"), creates an execution token for the word that follows it, then pushes it to the stack. If we print this value out, we get `executable token < greet >`. Forth languages would traditionally return memory location, but `froth` just shows the word that the execution token corresponds to. The second word, `EXECUTE`, does just that: it executes the execution token at the top of the stack. 
+
+In a way, `' GREET EXECUTE` is just a really roundabout way of accomplishing the same thing as just calling `GREET` directly. Naturally, one might wonder what the purpose of this is. We can use `'` to store functions in variables so we can *indirectly* execute them later on. Let's see how to do this with an example:
+
+```
+fr> : HELLO ." Hello" ;
+ok.
+fr> : GOODBYE ." Goodbye" ;
+ok.
+fr> VARIABLE 'aloha ' HELLO 'aloha !
+ok.
+fr> : ALOHA 'aloha @ EXECUTE ;
+ok.
+```
+
+I'll show what happened in a minute, but I'd encourage readers to first think about this code. What's going on here? What would running `'aloha` do? Read through the code, then continue on to the explanation below.
+
+The first two lines should be simple by now. We've defined two functions, `HELLO` and `GOODBYE`, that simply print out `Hello` and `Goodbye` (respectively). Then, we initialize a variable called `'aloha`, and store an execution token for `HELLO` inside that variable. Finally, we define a function `ALOHA` that executes the execution token stored in `'aloha`.
+
+This implies two things. First, if we run `ALOHA`, we should expect it to call `HELLO`:
+```
+fr> ALOHA
+Hello ok.
+```
+
+And indeed it does. Secondly, if we store a different function pointer in `'aloha` and then call `ALOHA`, we should expect to see a different result:
+```
+fr> ' GOODBYE 'aloha !
+ok.
+fr> ALOHA
+Goodbye ok.
+```
+
+Here lies the power of execution tokens. Using a single variable, we can call multiple functions! 
+
+I'll also note that we called our variable `'aloha` ("tick-aloha"). This convention of preceding the variable name with a `'` is used in Forth to denote variables that store execution pointers.
+
+### For Forth programmers
+
+There is a one major difference here between Forth and `froth`. `froth` is completely interpreted, and thus does not distinguish between variable definition lines and non-definition lines. What this means for Forth programmers is that the `froth` word `'` is equivalent to the Forth word `[']` when used in a definition context. `froth` cannot look at the input stream, and will instead always look at the next word on the execution stack. I'm thinking of changing this to be more consistent with Forth in the future, but I haven't gotten to it yet.
+
+This implications of this are demonstrated by the following:
+```
+fr> : SAY ' 'aloha ! ;
+ok.
+fr> SAY HELLO
+Error: can't find 'aloha
+fr> : COMING ' HELLO 'aloha ! ;
+ok.
+fr> : GOING ' GOODBYE 'aloha ! ;
+ok.
+fr> COMING ALOHA GOING ALOHA
+Hello Goodbye ok.
+```
+
+In traditional Forth, the `GOING` definition would be `: GOING ['] GOODBYE 'aloha ! ;`, and `SAY HELLO` would not produce an error. However, this isn't the case here. `[']` is also provided as an alias for `'`. Again, I plan to change this eventually.
+
 ## Words in this chapter
 
 - `VARIABLE xxx`: creates a variable named `xxx`
@@ -258,6 +334,9 @@ fr> myarray LENGTH?
 - `EXTEND ( addr ncells -- )`: extends the array at `addr` by `ncells` cells
 - `LENGTH ( addr -- len )`: pushes the length of the array at `addr` onto the stack
 - `LENGTH? ( addr -- )`: prints the length of the array at `addr`
+- `' xxx ( -- addr )`: attempts to find `xxx` in the dictionary, and pushes an execution token for `xxx` to the stack if found
+- `EXECUTE ( xt -- )`: executes an execution token on top of the stack
+- `['] xxx ( -- addr )`: currently equivalent to `'` for `froth` 
 
 <div class="center">
   <ul class="pagination pagination-lg">

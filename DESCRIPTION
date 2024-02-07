@@ -1,11 +1,13 @@
 Package: froth
 Title: Emulate a 'Forth' Programming Environment
-Version: 1.0.0
+Version: 1.1.0
 Authors@R: 
     person(given="Aidan", family="Lakshman", email="ahl27@pitt.edu", 
 	   role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-9465-6785"))
-Description: Emulates a 'Forth' programming environment with added features to interface between R and 'Forth'. Implements most of the functionality described in the original "Starting Forth" textbook <https://www.forth.com/starting-forth/>.
+Description: Emulates a 'Forth' programming environment with added features to 
+  interface between R and 'Forth'. Implements most of the functionality described 
+  in the original "Starting Forth" textbook <https://www.forth.com/starting-forth/>.
 Depends: R (>= 4.3.0)
 Imports: methods
 Suggests:

@@ -1,6 +1,6 @@
 .initIOFunctions <- function(){
   .fdefine('.', \() {cat(pop(), ''); .ok()})
-  .fdefine('.R', \() {print(pop()); .ok()})
+  .fdefine('.r', \() {print(pop()); .ok()})
   .fdefine('emit', \() {cat(intToUtf8(pop())); .ok()})
   .fdefine('."', .catString)
   .fdefine('spaces', \() {cat(rep(' ', pop())); .ok()})
