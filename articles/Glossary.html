@@ -359,6 +359,17 @@ at <code>addr</code> onto the stack</li>
 <code>LENGTH? ( addr -- )</code>: prints the length of the array at
 <code>addr</code>
 </li>
+<li>
+<code>' xxx ( -- addr )</code>: attempts to find <code>xxx</code> in
+the dictionary, and pushes an execution token for <code>xxx</code> to
+the stack if found</li>
+<li>
+<code>EXECUTE ( xt -- )</code>: executes an execution token on top
+of the stack</li>
+<li>
+<code>['] xxx ( -- addr )</code>: currently equivalent to
+<code>'</code> for <code>froth</code>
+</li>
 </ul>
 <div class="center">
 <ul class="pagination pagination-lg">
