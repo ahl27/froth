@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">froth</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -344,6 +344,111 @@ fr&gt; myarray LENGTH?
 20 ok.</code></pre>
 </div>
 <div class="section level2">
+<h2 id="execution-tokens">Execution Tokens<a class="anchor" aria-label="anchor" href="#execution-tokens"></a>
+</h2>
+<p>Variables storing values is nice, but sometimes it’s useful to be
+able to store a function inside a variable. This is a common practice in
+R (e.g., any of the <code>*apply</code> functions), and also exists in C
+in the form of function pointers.</p>
+<p>Forth also incorporates a way to do this, using a unique word to put
+an “execution token” on the stack. An execution token is essentially
+just the location of a particular type of code. When you want to execute
+that token, Forth runs the code at the location referenced by the
+execution token.</p>
+<p>This capability is implemented in <code>froth</code>, but it does
+have a few differences to classic Forths due to how the memory is
+abstracted. Let’s start with a simple example:</p>
+<pre><code>fr&gt; : GREET ." Hello!" ;
+ok.
+fr&gt; GREET
+Hello! ok.
+fr&gt; ' GREET .
+executable token &lt; greet &gt; ok.
+fr&gt; ' GREET EXECUTE
+Hello! ok.</code></pre>
+<p>We have two new words here: <code>'</code> and <code>EXECUTE</code>.
+The first of these, <code>'</code> (pronounced “tick”), creates an
+execution token for the word that follows it, then pushes it to the
+stack. If we print this value out, we get
+<code>executable token &lt; greet &gt;</code>. Forth languages would
+traditionally return memory location, but <code>froth</code> just shows
+the word that the execution token corresponds to. The second word,
+<code>EXECUTE</code>, does just that: it executes the execution token at
+the top of the stack.</p>
+<p>In a way, <code>' GREET EXECUTE</code> is just a really roundabout
+way of accomplishing the same thing as just calling <code>GREET</code>
+directly. Naturally, one might wonder what the purpose of this is. We
+can use <code>'</code> to store functions in variables so we can
+<em>indirectly</em> execute them later on. Let’s see how to do this with
+an example:</p>
+<pre><code>fr&gt; : HELLO ." Hello" ;
+ok.
+fr&gt; : GOODBYE ." Goodbye" ;
+ok.
+fr&gt; VARIABLE 'aloha ' HELLO 'aloha !
+ok.
+fr&gt; : ALOHA 'aloha @ EXECUTE ;
+ok.</code></pre>
+<p>I’ll show what happened in a minute, but I’d encourage readers to
+first think about this code. What’s going on here? What would running
+<code>'aloha</code> do? Read through the code, then continue on to the
+explanation below.</p>
+<p>The first two lines should be simple by now. We’ve defined two
+functions, <code>HELLO</code> and <code>GOODBYE</code>, that simply
+print out <code>Hello</code> and <code>Goodbye</code> (respectively).
+Then, we initialize a variable called <code>'aloha</code>, and store an
+execution token for <code>HELLO</code> inside that variable. Finally, we
+define a function <code>ALOHA</code> that executes the execution token
+stored in <code>'aloha</code>.</p>
+<p>This implies two things. First, if we run <code>ALOHA</code>, we
+should expect it to call <code>HELLO</code>:</p>
+<pre><code>fr&gt; ALOHA
+Hello ok.</code></pre>
+<p>And indeed it does. Secondly, if we store a different function
+pointer in <code>'aloha</code> and then call <code>ALOHA</code>, we
+should expect to see a different result:</p>
+<pre><code>fr&gt; ' GOODBYE 'aloha !
+ok.
+fr&gt; ALOHA
+Goodbye ok.</code></pre>
+<p>Here lies the power of execution tokens. Using a single variable, we
+can call multiple functions!</p>
+<p>I’ll also note that we called our variable <code>'aloha</code>
+(“tick-aloha”). This convention of preceding the variable name with a
+<code>'</code> is used in Forth to denote variables that store execution
+pointers.</p>
+<div class="section level3">
+<h3 id="for-forth-programmers">For Forth programmers<a class="anchor" aria-label="anchor" href="#for-forth-programmers"></a>
+</h3>
+<p>There is a one major difference here between Forth and
+<code>froth</code>. <code>froth</code> is completely interpreted, and
+thus does not distinguish between variable definition lines and
+non-definition lines. What this means for Forth programmers is that the
+<code>froth</code> word <code>'</code> is equivalent to the Forth word
+<code>[']</code> when used in a definition context. <code>froth</code>
+cannot look at the input stream, and will instead always look at the
+next word on the execution stack. I’m thinking of changing this to be
+more consistent with Forth in the future, but I haven’t gotten to it
+yet.</p>
+<p>This implications of this are demonstrated by the following:</p>
+<pre><code>fr&gt; : SAY ' 'aloha ! ;
+ok.
+fr&gt; SAY HELLO
+Error: can't find 'aloha
+fr&gt; : COMING ' HELLO 'aloha ! ;
+ok.
+fr&gt; : GOING ' GOODBYE 'aloha ! ;
+ok.
+fr&gt; COMING ALOHA GOING ALOHA
+Hello Goodbye ok.</code></pre>
+<p>In traditional Forth, the <code>GOING</code> definition would be
+<code>: GOING ['] GOODBYE 'aloha ! ;</code>, and <code>SAY HELLO</code>
+would not produce an error. However, this isn’t the case here.
+<code>[']</code> is also provided as an alias for <code>'</code>. Again,
+I plan to change this eventually.</p>
+</div>
+</div>
+<div class="section level2">
 <h2 id="words-in-this-chapter">Words in this chapter<a class="anchor" aria-label="anchor" href="#words-in-this-chapter"></a>
 </h2>
 <ul>
@@ -401,6 +506,17 @@ at <code>addr</code> onto the stack</li>
 <li>
 <code>LENGTH? ( addr -- )</code>: prints the length of the array at
 <code>addr</code>
+</li>
+<li>
+<code>' xxx ( -- addr )</code>: attempts to find <code>xxx</code> in
+the dictionary, and pushes an execution token for <code>xxx</code> to
+the stack if found</li>
+<li>
+<code>EXECUTE ( xt -- )</code>: executes an execution token on top
+of the stack</li>
+<li>
+<code>['] xxx ( -- addr )</code>: currently equivalent to
+<code>'</code> for <code>froth</code>
 </li>
 </ul>
 <div class="center">

@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">froth</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -112,27 +112,28 @@
 <span class="r-in"><span><span class="fu">froth.dictionary</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Built-in Words:</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> exit inspect words apply multiapply : forget lit</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ( noop abort" reset clear swap 2swap dup</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2dup dig over 2over 2drop rot drop ?dup</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;r r&gt; r@ . .R emit ." spaces</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> space cr u.r + sum - * div</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> idiv ^ mod /mod 1+ 1- 2+ 2-</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2* 2/ negate abs min max sqrt */</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> */mod invert or and xor 0= 0&lt; 0&gt;</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &lt; &lt;= &gt; &gt;= = &lt;&gt; if else</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> do begin loop +loop while leave until repeat</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> i j k loopcounter loopend variable ! @</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> length length? +! ? constant cells allot extend</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> reallot fill erase create , r_rnorm</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ( noop abort" reset ' execute clear swap</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2swap dup 2dup dig over 2over 2drop rot</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> drop ?dup &gt;r r&gt; r@ . .r emit</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ." spaces space cr u.r + sum -</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> * div idiv ^ mod /mod 1+ 1-</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2+ 2- 2* 2/ negate abs min max</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> sqrt */ */mod invert or and xor 0=</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 0&lt; 0&gt; &lt; &lt;= &gt; &gt;= = &lt;&gt;</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> if else do begin loop +loop while leave</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> until repeat i j k loopcounter loopend variable</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ! @ length length? +! ? constant cells</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> allot extend reallot fill erase create , r_rnorm</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Aliases:</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> quit (exit) compile (:) ) (noop) .s (inspect)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> xx (reset) \ (noop) % (mod) / (div)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> %/% (idiv) pow (^) times (*) ++ (1+)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> -- (1-) neg (negate) not (invert) ~ (invert)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &amp; (and) | (or) equal (=) eq (=)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> != (&lt;&gt;) neq (&lt;&gt;) gr (&lt;) lt (&gt;)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> geq (&lt;=) leq (&gt;=) then (noop) again (repeat)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> xx (reset) \ (noop) ['] (') % (mod)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> / (div) %/% (idiv) pow (^) times (*)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ++ (1+) -- (1-) neg (negate) not (invert)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ~ (invert) &amp; (and) | (or) equal (=)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> eq (=) != (&lt;&gt;) neq (&lt;&gt;) gr (&lt;)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> lt (&gt;) geq (&lt;=) leq (&gt;=) then (noop)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> again (repeat)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> User Definitions:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
