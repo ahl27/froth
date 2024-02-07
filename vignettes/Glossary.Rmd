@@ -101,6 +101,9 @@ You can list all the installed words in `froth` with the `WORDS` word, or use `f
 - `EXTEND ( addr ncells -- )`: extends the array at `addr` by `ncells` cells
 - `LENGTH ( addr -- len )`: pushes the length of the array at `addr` onto the stack
 - `LENGTH? ( addr -- )`: prints the length of the array at `addr`
+- `' xxx ( -- addr )`: attempts to find `xxx` in the dictionary, and pushes an execution token for `xxx` to the stack if found
+- `EXECUTE ( xt -- )`: executes an execution token on top of the stack
+- `['] xxx ( -- addr )`: currently equivalent to `'` for `froth` 
 
 <div class="center">
   <ul class="pagination pagination-lg">
