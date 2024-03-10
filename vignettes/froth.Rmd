@@ -33,4 +33,4 @@ However, there are a few known differences that I implemented intentionally:
 - Everything is interpreted. Loops can be executed outside of a definition.
 - Virtual memory. Users don't get access to system-level memory, mostly because R doesn't allow that either.
 - Arbitrary R objects can be pushed onto the stack
-- I haven't yet implemented `FORGET`, `'`, or I/O from `froth`. Words/variables can be redefined any time, but they'll destructively overwrite the previous definition.
+- I haven't yet implemented I/O.
