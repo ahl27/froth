@@ -1,4 +1,4 @@
-pandoc: 2.19.2
+pandoc: 3.1.11
 pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
@@ -10,7 +10,7 @@ articles:
   RInterface: RInterface.html
   Variables: Variables.html
   froth: froth.html
-last_built: 2024-02-07T16:05Z
+last_built: 2024-03-10T03:38Z
 urls:
   reference: http://www.ahl27.com/froth/reference
   article: http://www.ahl27.com/froth/articles
